@@ -1,0 +1,73 @@
+.Services {
+    
+    position: relative;
+    top: 40em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+}
+
+.serverice-continar {
+    
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10em;
+}
+
+.box {
+    margin-left: 5em;
+   
+    background: linear-gradient(135deg, #fff6f8, #fff6f8);
+    border-radius: 30px;
+    padding: 10px 20px;
+
+    width: 400px;
+    height: 400px; 
+   
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    border: 2px solid #4386c163;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.box img {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+}
+.btn{
+   padding: 10px;
+   margin-top: 40px;
+   font-weight: 400;
+   font-size: 22px;
+   background-color:#3694e6cf ;
+   border: none;
+   border-radius: 20px;
+   color: rgb(255, 255, 255);
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+span{
+    margin-top: 1.5em;
+    font-size: 22px;
+    font-weight: 700;
+    
+}
+.box:hover {
+    transform: scale(1.1); /* تكبير الكارت بنسبة 10% */
+    box-shadow: 5px 6px 30px rgba(0, 0, 0, 0.35); /* تحسين الظل عند التمرير */
+    cursor: pointer;
+    border: 3px solid #278ee9c2;
+}
+.btn:hover {
+    transform: scale(1.1); 
+    box-shadow: 5px 6px 30px rgba(0, 0, 0, 0.35); 
+    cursor: pointer;
+    background-color: #278ee9f3;
+}

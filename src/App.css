@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Roboto", sans-serif;
+  font-family: "Rubik", sans-serif;
+}
+
+body {
+  
+
+  background-color: #fff6f8;
+}
+.FqaHome2{
+  text-align: center;
+   display: flex;
+   justify-content: space-between;
+   
+   
+}
+.AApp{
+  text-align: center;
+   min-height: 100vh;
+   display: flex;
+   flex-direction: column;
+}
+.Home {
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  padding: 0 10%;
+}
+
+.homeCountnt {
+  text-align: center;
+  background-color: transparent;
+  max-width: 699px;
+}
+
+.homeCountnt h1 {
+  margin: 15px;
+  color: white;
+  font-size: 40px;
+}
+
+.homeCountnt h2 {
+  padding: 10px;
+  color: #278de9;
+  font-size: 25px;
+}
+
+.btnBox a {
+  margin-top: 20px;
+  gap: 10px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+  background-color: #278de9;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  letter-spacing: 1px;
+}
+
+.btnBox a:hover {
+  background-color: #27c4e9;
+  transform: scale(1.05);
+}

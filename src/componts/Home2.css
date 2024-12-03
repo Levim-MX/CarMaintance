@@ -47,26 +47,58 @@
   }
 
 
-  @media screen and (max-width: 768px) {
+  @media (max-width: 1920px) {
+    .heading h2 {
+      font-size: 1em;
+      margin-bottom: 2em;
+    }
     .howItWork {
-      left: 0;
-      padding: 20px;
+      position: relative;
+      top: 13em;
+      left: 40%;
+      transform: translateX(-50%); /* لتوسيط العنصر */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5em;
     }
-  
-    .howItWork .cardCountinar {
-      gap: 2em;
-    }
-  
+
     .howItWork .cardCountinar .card {
-      padding: 10px;
+        width: 300px;
+        padding: 8px 16px;
     }
-  
+
     .howItWork .cardCountinar .card span {
-      font-size: 2em;
+        font-size: 2.5em;
     }
-  
+}
+
+@media (max-width: 1280px) {
+    .howItWork {
+        top: 5em;
+        gap: 2em;
+    }
+
+    .howItWork .cardCountinar .card {
+        padding: 5px 10px;
+    }
+
+    .howItWork .cardCountinar .card span {
+        font-size: 2.5em;
+    }
+}
+
+@media (min-width: 3840px) {
+    .howItWork {
+        top: 15em;
+        gap: 6em;
+    }
+
+    .howItWork .cardCountinar .card span {
+        font-size: 5em;
+    }
+
     .howItWork .cardCountinar .card p {
-      font-size: 16px;
+        font-size: 1.2em;
     }
-  }
-  
+}

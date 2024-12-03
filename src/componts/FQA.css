@@ -87,19 +87,50 @@
   
 
 
-   @media screen and (max-width: 768px) {
+
+  @media (max-width: 1920px) {
     .section-faq {
-      width: 90%;
-      right: 0;
-      margin: auto;
+      position: relative;
+      left: 95em;
+      bottom: 20em;
+        width: 20%;
     }
-  
+
     .section-faq h1 {
-      font-size: 1.2em;
+        font-size: 1.2em;
     }
-  
+
     .section-faq .answer {
-      font-size: 0.8em;
+        font-size: 0.9em;
     }
-  }
-  
+}
+
+@media (max-width: 1280px) {
+    .section-faq {
+        right: 2em;
+        width: 80%;
+        padding: 10px;
+    }
+
+    .section-faq h1 {
+        font-size: 1.2em;
+    }
+
+    .section-faq .answer {
+        font-size: 0.8em;
+    }
+}
+
+@media (min-width: 3840px) {
+    .section-faq {
+        width: 40%;
+    }
+
+    .section-faq h1 {
+        font-size: 2em;
+    }
+
+    .section-faq .answer {
+        font-size: 1em;
+    }
+}

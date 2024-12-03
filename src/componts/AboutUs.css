@@ -70,31 +70,49 @@
     object-fit: cover;
 
   }
-  @media screen and (max-width: 768px) {
+
+  @media (max-width: 1920px) {
     .About {
-      left: 1em;
-      top: 30em;
-      padding: 20px;
+        left: 2em;
+        padding: 20px;
+        margin-bottom: 30em;
     }
-  
     .about-us-content {
-      margin-left: 0;
+      position: relative;
+      top: 1em;
+      right: 20em;
+        margin-left: 0;
     }
-  
-    .About h1 {
-      font-size: 2rem;
+    .About h1, .About h2, .About p, .About ul li {
+        font-size: 90%;
     }
-  
-    .About h2 {
-      font-size: 1.5rem;
+}
+
+@media (max-width: 1280px) {
+    .About {
+        left: 0;
+        padding: 10px;
     }
-  
-    .About p {
-      font-size: 1rem;
+    .about-us-content {
+        margin-left: 0;
     }
-  
-    .About ul li {
-      font-size: 1rem;
+    .About h1, .About h2 {
+        font-size: 1.5rem;
     }
-  }
-  
+    .About p, .About ul li {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 3840px) {
+    .About {
+        max-width: 3000px;
+        padding: 60px;
+    }
+    .about-us-content {
+        margin-left: 100em;
+    }
+    .About h1, .About h2, .About p, .About ul li {
+        font-size: 110%;
+    }
+}

@@ -88,30 +88,28 @@ body {
   transform: scale(1.05);
 }
 
-
-@media screen and (max-width: 768px) {
+@media (max-width: 1920px) {
   .FqaHome2 {
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
+      flex-direction: column;
   }
+}
 
-  .Home {
-    height: auto;
-    flex-direction: column;
-    padding: 10px;
-  }
-
-  .homeCountnt h1 {
-    font-size: 1.5em;
-  }
-
-  .homeCountnt h2 {
-    font-size: 1.2em;
+@media (max-width: 1280px) {
+  .FqaHome2 {
+      flex-direction: column;
+      text-align: center;
   }
 
   .btnBox a {
-    font-size: 14px;
-    padding: 8px 16px;
+      font-size: 12px;
+      padding: 8px 16px;
   }
 }
+
+@media (min-width: 3840px) {
+  .btnBox a {
+      font-size: 20px;
+      padding: 20px 40px;
+  }
+}
+

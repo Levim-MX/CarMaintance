@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;500;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+/* تأثير الظهور التدريجي */
+.fade-in {
+  opacity: 0; /* مخفي في البداية */
+  transform: translateY(20px); /* تحريك العنصر للأسفل */
+  transition: opacity 1s ease, transform 1s ease; /* تأثير انتقال سلس */
+}
+
+.fade-in.loaded {
+  opacity: 1; /* العنصر يظهر */
+  transform: translateY(0); /* يعود إلى مكانه الطبيعي */
+}
 
 * {
   margin: 0;
@@ -75,4 +86,32 @@ body {
 .btnBox a:hover {
   background-color: #27c4e9;
   transform: scale(1.05);
+}
+
+
+@media screen and (max-width: 768px) {
+  .FqaHome2 {
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .Home {
+    height: auto;
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .homeCountnt h1 {
+    font-size: 1.5em;
+  }
+
+  .homeCountnt h2 {
+    font-size: 1.2em;
+  }
+
+  .btnBox a {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
 }

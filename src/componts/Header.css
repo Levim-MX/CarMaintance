@@ -47,3 +47,22 @@
     text-decoration: underline;
     color: #278de9;
   }
+
+  @media screen and (max-width: 768px) {
+    .HeaderBar {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
+    }
+  
+    .navbar a {
+      font-size: 16px;
+      margin-left: 15px;
+      margin-top: 10px;
+    }
+  
+    .logo {
+      font-size: 30px;
+    }
+  }
+  

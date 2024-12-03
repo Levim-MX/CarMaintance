@@ -21,7 +21,7 @@ function ServicesContent(){
           <div className='serverice-continar' id='serverice-continar'>
                       {/* card 1 */}
                   <div className='box'>
-                    <img src="/images/part1.png" alt="" />
+                    <img src="/images/audiCarEngin.jpg" alt="" />
                     
                       <button className='btn' id='btn'> صيانة المحرك </button>
                       <span>150$</span>
@@ -38,7 +38,7 @@ function ServicesContent(){
 
                        {/* card 3 */}
                        <div className='box'>
-                    <img src="/images/part6.png" alt="" />
+                    <img src="/images/audiCarWheel.jpeg" alt="" />
                     
                     
                       <button className='btn' id='btn'> صيانة الأطارات </button>
@@ -48,7 +48,7 @@ function ServicesContent(){
 
                        {/* card 4 */}
                        <div className='box'>
-                    <img src="/images/CarOil.png" alt="" />
+                    <img src="/images/oilChange.jpg" alt="" />
                     
                     
                       <button className='btn' id='btn'> تبديل زيت السيارة  </button>
@@ -58,7 +58,7 @@ function ServicesContent(){
 
                    {/* card 5 */}
                   <div className='box'>
-                    <img src="/images/part1.png" alt="" />
+                    <img src="/images/audiCarEngin.jpg" alt="" />
                     
                     
                       <button className='btn' id='btn'> صيانة المحرك </button>
@@ -68,7 +68,7 @@ function ServicesContent(){
                   
                      {/* card 6 */}
                   <div className='box'>
-                    <img src="/images/CarWashing.png" alt="" />
+                    <img src="/images/carWashinggg.jpg" alt="" />
                    
                     
                       <button className='btn' id='btn'>  غسل وتنطيف السيارة </button>
@@ -77,7 +77,7 @@ function ServicesContent(){
                   </div>
                            {/* card 7 */}
                            <div className='box'>
-                    <img src="/images/part1.png" alt="" />
+                    <img src="/images/audiCarEngin.jpg" alt="" />
                     
                     
                       <button className='btn' id='btn'> صيانة المحرك </button>
@@ -86,10 +86,10 @@ function ServicesContent(){
                   </div>
                            {/* card 8 */}
                            <div className='box'>
-                    <img src="/images/part1.png" alt="" />
+                    <img src="/images/640px-Bremsanlage.jpg" alt="" />
                     
                     
-                      <button className='btn' id='btn'> صيانة المكابج </button>
+                      <button className='btn' id='btn'> صيانة المكابح </button>
                       <span>200$</span>
                   </div>
                   

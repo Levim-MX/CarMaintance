@@ -1,5 +1,4 @@
-
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Header from './componts/Header.jsx';
 import FQA from './componts/FQA.jsx';
@@ -11,35 +10,43 @@ import AboutUs from './componts/AboutUs.jsx';
 
 import './App.css';
 
-
-
 function App() {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // تعيين حالة التحميل بعد تحميل الصفحة
+    const timer = setTimeout(() => setIsLoaded(true), 100); // تأخير بسيط
+    return () => clearTimeout(timer); // تنظيف المؤقت
+  }, []);
 
   return (
-   
-        
-      <>
-     <Header /> 
-     
-     <Home/>
-     <div className='FqaHome2'>
-     <Home2/>
-     <FQA />
-     
-     </div>
-
-     <ServicesContent/>
-     <AboutUs/>
-     
-     <div className='AApp'>
-     
-      <Footer/>
+    <>
+      <div className={`fade-in ${isLoaded ? 'loaded' : ''}`}>
+        <Header />
       </div>
-      </>
-        
-  );
 
+      <div className={`fade-in ${isLoaded ? 'loaded' : ''}`}>
+        <Home />
+      </div>
+
+      <div className={`fade-in ${isLoaded ? 'loaded' : ''} FqaHome2`}>
+        <Home2 />
+        <FQA />
+      </div>
+
+      <div className={`fade-in ${isLoaded ? 'loaded' : ''}`}>
+        <ServicesContent />
+      </div>
+
+      <div className={`fade-in ${isLoaded ? 'loaded' : ''}`}>
+        <AboutUs />
+      </div>
+
+      <div className={`fade-in ${isLoaded ? 'loaded' : ''} AApp`}>
+        <Footer />
+      </div>
+    </>
+  );
 }
 
-
-export default App
+export default App;

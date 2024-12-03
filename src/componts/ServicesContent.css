@@ -1,7 +1,11 @@
+.heading{
+  font-weight: 700;
+  font-size: 2em;
+}
 .Services {
     
     position: relative;
-    top: 40em;
+    top: 30em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,9 +26,10 @@
     border-radius: 30px;
     padding: 10px 20px;
 
-    width: 400px;
-    height: 400px; 
-   
+    width: 600px;
+    height: 500px; 
+    box-shadow: 1px 4px 5px rgba(0, 0, 0, 0.7); /* ظل أعمق عند التمرير */
+
     border-radius: 8px;
     overflow: hidden;
     display: flex;
@@ -37,8 +42,9 @@
 }
 
 .box img {
-    max-width: 100%;
-    max-height: 200px;
+  padding: 3px;
+    width: 100%;
+    height: 350px;
     object-fit: cover;
 }
 .btn{
@@ -71,3 +77,34 @@ span{
     cursor: pointer;
     background-color: #278ee9f3;
 }
+
+
+@media screen and (max-width: 768px) {
+    .Services {
+      gap: 50px;
+    }
+  
+    .serverice-continar {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .box {
+      width: 100%;
+      max-width: 350px;
+      height: auto;
+    }
+  
+    .box img {
+      max-height: 150px;
+    }
+  
+    .btn {
+      font-size: 18px;
+    }
+  
+    span {
+      font-size: 18px;
+    }
+  }
+  

@@ -1,3 +1,5 @@
+
+
 .home {
     position: static;
     margin-bottom: auto;
@@ -60,5 +62,35 @@
       transform: scale(1.4);
        background-color: #2962b3fe; /* لون عند التمرير */
       box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.7); /* ظل أعمق عند التمرير */
+    }
+    
+
+    @media screen and (max-width: 768px) {
+      .home {
+        flex-direction: column;
+        min-height: auto;
+        text-align: center;
+      }
+    
+      .home .home-text {
+        margin-left: 0;
+        padding: 20px;
+      }
+    
+      .home .home-text h1 {
+        font-size: 1.5em;
+      }
+    
+      .home .home-text p {
+        font-size: 1em;
+      }
+    
+      .home .home-text .button-box {
+        margin-top: 10px;
+      }
+    
+      .home .home-text .button-box .btn {
+        font-size: 1em;
+      }
     }
     

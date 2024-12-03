@@ -1,10 +1,6 @@
-.heading{
-  font-weight: 700;
-  font-size: 2em;
-}
+
 .Services {
-    
-    position: relative;
+    margin-top: 40em;
     top: 30em;
     display: flex;
     flex-direction: column;
@@ -13,12 +9,17 @@
 }
 
 .serverice-continar {
-    
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10em;
+  position: relative;
+  display: grid; /* تعيين الحاوية كشبكة */
+  grid-template-columns: repeat(3, 1fr); /* 3 أعمدة متساوية */
+  grid-template-rows: auto; /* ارتفاع الصفوف تلقائي */
+  gap: 10px; /* المسافة بين العناصر */
+  row-gap: 60px;
 }
-
+.heading{
+  font-weight: 700;
+  font-size: 2em;
+}
 .box {
     margin-left: 5em;
    

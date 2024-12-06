@@ -7,6 +7,8 @@ import ServicesContent from './componts/ServicesContent.jsx';
 import Home2 from './componts/Home2.jsx';
 import Footer from './componts/Footer.jsx';
 import AboutUs from './componts/AboutUs.jsx';
+import Form from './componts/Form.jsx';
+
 
 import './App.css';
 
@@ -21,7 +23,8 @@ function App() {
 
   return (
     <>
-      <div className={`fade-in ${isLoaded ? 'loaded' : ''}`}>
+       <Form/>
+      {/* <div className={`fade-in ${isLoaded ? 'loaded' : ''}`}>
         <Header />
       </div>
 
@@ -44,7 +47,7 @@ function App() {
 
       <div className={`fade-in ${isLoaded ? 'loaded' : ''} AApp`}>
         <Footer />
-      </div>
+      </div> */}
     </>
   );
 }

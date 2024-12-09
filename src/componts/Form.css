@@ -18,10 +18,12 @@ flex-direction: column;
 gap: 4em;
 box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); 
 border-radius: 10px; /* لإضافة زوايا مدورة */
+
 }
 .form-header{
     font-size: 1.1em;
-    margin-top: 3em;
+    margin-top: 2em;
+    
 }
 .form-body{    
     width: 90%;
@@ -35,7 +37,7 @@ border-radius: 10px; /* لإضافة زوايا مدورة */
  padding: 10px;
 }
 .form-body .form-group {
-   width: 100%;
+   width: 500px;
    height: 100%;
   
  
@@ -59,11 +61,15 @@ border-radius: 10px; /* لإضافة زوايا مدورة */
     position: relative;
     display: flex;
      left: 3em;
-     top: 2em;
+     top: 1em;
     flex-direction: column;
     bottom: 40px;
     width: 500px;
     height: 300px;
+    direction: rtl;
+    
+    
+  
 }
 .form-footer button{
 
@@ -98,10 +104,56 @@ border-radius: 10px; /* لإضافة زوايا مدورة */
 
   .icon {
    position: absolute;
-   left: 56%;
+   left: 55.2%;
    margin-top: 12px;
    
 
     color: #278ee9bf;
     font-size: 1.4rem;
   }
+
+  .form-body .form-group .custom-select{
+    padding: 10px;
+ height: 50px;
+  font-size: 1.4em;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); 
+}
+
+
+
+.form-footer .btn2{
+ width: 50%;
+ font-size: 1em;
+  margin-bottom: 3em;
+  margin-right: 9em;
+    
+}
+
+.form-footer .checkbox-container{
+position: absolute;
+right: 110%;
+gap: 10px;
+    margin-top: 2px;
+}
+
+
+  .checkbox-container input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    
+  }
+ .form-footer .error-message{
+  position: absolute;
+  font-size: 1.1em;
+  top: 40%;
+  right: 1%;
+
+ }
+
+ .form-footer .btn-countainer{
+
+  
+ }

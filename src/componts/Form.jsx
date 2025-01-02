@@ -188,7 +188,7 @@ const Form = () => {
           </div>
             
           {showError && <p className="error-message">يرجى النقر على المربع قبل تأكيد الحجز.</p>}
-          <div className='btn-countainer'> 
+          <div className='btn-'> 
           <button type="submit" className="btn2">إرسال المعلومات وتأكيد الحجز</button>
           <button type="button" className="btn2" onClick={handleBack}>رجوع</button>
           </div>

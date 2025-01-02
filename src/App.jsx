@@ -23,8 +23,8 @@ function App() {
 
   return (
     <>
-       <Form/>
-      {/* <div className={`fade-in ${isLoaded ? 'loaded' : ''}`}>
+      
+      <div className={`fade-in ${isLoaded ? 'loaded' : ''}`}>
         <Header />
       </div>
 
@@ -47,7 +47,8 @@ function App() {
 
       <div className={`fade-in ${isLoaded ? 'loaded' : ''} AApp`}>
         <Footer />
-      </div> */}
+      </div>
+      <Form/>
     </>
   );
 }

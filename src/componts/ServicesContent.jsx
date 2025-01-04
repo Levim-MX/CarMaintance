@@ -2,7 +2,7 @@ import React from 'react';
 import './ServicesContent.css'
 import '../App.css'
 
-function ServicesContent(){
+function ServicesContent({ onServiceClick }){
 
     return(
     <section className='Services' id='Services'>
@@ -23,7 +23,7 @@ function ServicesContent(){
                   <div className='box'>
                     <img src="/images/audiCarEngin.jpg" alt="" />
                     
-                      <button className='btn' id='btn'> صيانة المحرك </button>
+                      <button className='btn' id='btn' onClick={onServiceClick}> صيانة المحرك </button>
                       <span>150$</span>
                     
                   </div>
@@ -32,7 +32,7 @@ function ServicesContent(){
                        <div className='box'>
                     <img src="/images/part2.png" alt="" />
                   
-                      <button className='btn' id='btn'> تبديل بستم المحرك  </button>
+                      <button className='btn' id='btn' onClick={onServiceClick}> تبديل بستم المحرك  </button>
                       <span>45$</span>
                   </div>
 
@@ -41,7 +41,7 @@ function ServicesContent(){
                     <img src="/images/audiCarWheel.jpeg" alt="" />
                     
                     
-                      <button className='btn' id='btn'> صيانة الأطارات </button>
+                      <button className='btn' id='btn' onClick={onServiceClick}> صيانة الأطارات </button>
                       <span>30$</span>
                       
                   </div>
@@ -51,7 +51,7 @@ function ServicesContent(){
                     <img src="/images/oilChange.jpg" alt="" />
                     
                     
-                      <button className='btn' id='btn'> تبديل زيت السيارة  </button>
+                      <button className='btn' id='btn' onClick={onServiceClick}> تبديل زيت السيارة  </button>
                       <span>100$</span>
                       
                   </div>  
@@ -61,7 +61,7 @@ function ServicesContent(){
                     <img src="/images/audiCarEngin.jpg" alt="" />
                     
                     
-                      <button className='btn' id='btn'> صيانة المحرك </button>
+                      <button className='btn' id='btn' onClick={onServiceClick}> صيانة المحرك </button>
                       <span>100$</span>
                     
                   </div> 
@@ -71,7 +71,7 @@ function ServicesContent(){
                     <img src="/images/carWashinggg.jpg" alt="" />
                    
                     
-                      <button className='btn' id='btn'>  غسل وتنطيف السيارة </button>
+                      <button className='btn' id='btn' onClick={onServiceClick}>  غسل وتنطيف السيارة </button>
                       <span>60$</span>
                      
                   </div>
@@ -80,7 +80,7 @@ function ServicesContent(){
                     <img src="/images/audiCarEngin.jpg" alt="" />
                     
                     
-                      <button className='btn' id='btn'> صيانة المحرك </button>
+                      <button className='btn' id='btn' onClick={onServiceClick}> صيانة المحرك </button>
                       <span>150$</span>
                       
                   </div>
@@ -89,7 +89,7 @@ function ServicesContent(){
                     <img src="/images/640px-Bremsanlage.jpg" alt="" />
                     
                     
-                      <button className='btn' id='btn'> صيانة المكابح </button>
+                      <button className='btn' id='btn' onClick={onServiceClick}> صيانة المكابح </button>
                       <span>200$</span>
                   </div>
                   

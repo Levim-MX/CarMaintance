@@ -5,7 +5,7 @@ import './Form.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
-const Form = () => {
+const Form = ({ onCloseForm }) => {
   const[currentStep,setCurrentStep]=useState(1);
   const [isChecked, setIsChecked] = useState(false);
   const [showError, setShowError] = useState(false);
@@ -113,6 +113,13 @@ const Form = () => {
         <div className="form-footer">
           <p>سيتم خزن وتشفير جميع البيانات لضمان السرية</p>
           <button type="submit">التالي</button>
+          <div className='closeBtn'> 
+            
+            <button type="button" className='btn3' onClick={onCloseForm}>
+             إغلاق
+           </button> 
+           
+           </div>
         </div>
       </form>
       )}
@@ -188,9 +195,17 @@ const Form = () => {
           </div>
             
           {showError && <p className="error-message">يرجى النقر على المربع قبل تأكيد الحجز.</p>}
-          <div className='btn-'> 
+          <div className='btn-Y'> 
           <button type="submit" className="btn2">إرسال المعلومات وتأكيد الحجز</button>
           <button type="button" className="btn2" onClick={handleBack}>رجوع</button>
+          <div className='closeBtn'> 
+            
+             <button type="button" className='btn3' onClick={onCloseForm}>
+              إغلاق
+            </button> 
+            
+            </div>
+         
           </div>
         </div>
       </form>

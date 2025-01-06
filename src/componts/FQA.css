@@ -9,7 +9,8 @@
      
      right: 9em;
      width: 25%;
-     max-width: 400px;
+     max-width: 300px;
+     
      background-color: #519bdc31;
      padding: 20px;
      border-radius: 8px;
@@ -88,16 +89,16 @@
 
 
 
-  @media (max-width: 1920px) {
+  @media (max-width: 1080px) {
     .section-faq {
-      position: relative;
-      left: 95em;
-      bottom: 20em;
-        width: 20%;
+      position: absolute;
+      left:60%;
+      top: 51%;
+      
     }
 
     .section-faq h1 {
-        font-size: 1.2em;
+        font-size: 2.1em;
     }
 
     .section-faq .answer {

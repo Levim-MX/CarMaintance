@@ -72,15 +72,15 @@
   }
 
   @media (max-width: 1920px) {
+    
     .About {
-        left: 2em;
-        padding: 20px;
-        margin-bottom: 30em;
+     position: absolute;
+    width: 100%;
     }
     .about-us-content {
       position: relative;
       top: 1em;
-      right: 20em;
+      right: 10em;
         margin-left: 0;
     }
     .About h1, .About h2, .About p, .About ul li {

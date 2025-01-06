@@ -54,9 +54,9 @@ function App() {
 
           <div className={`fade-in ${isLoaded ? 'loaded' : ''}`}>
             <AboutUs />
-          </div>
+          </div> 
 
-          <div className={`fade-in ${isLoaded ? 'loaded' : ''} AApp`}>
+           <div className={`fade-in ${isLoaded ? 'loaded' : ''} AApp`}>
             <Footer />
           </div>
         </>

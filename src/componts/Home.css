@@ -66,21 +66,26 @@
     
     @media (max-width: 1920px) {
       .home {
+        width: 100%;
           min-height: 700px;
       }
   
       .home .home-text h1 {
+        position: relative;
+        right: 7em;
 
           font-size: 1.2em;
       }
   
       .home .home-text p {
             position: relative;
-            right: 2em;
+            right: 11em;
           font-size: 1.2em;
       }
   
       .home .home-text .button-box .btn {
+        position: relative;
+        right: 3em;
           font-size: 1.2em;
       }
   }

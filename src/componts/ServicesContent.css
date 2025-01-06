@@ -21,7 +21,7 @@
   font-size: 2em;
 }
 .box {
-    margin-left: 5em;
+    margin-left: 4em;
    
     background: linear-gradient(135deg, #fff6f8, #fff6f8);
     border-radius: 30px;
@@ -81,30 +81,37 @@ span{
 
 
 @media (max-width: 1920px) {
+
+
+
+
+
+
+  .serverice-continar {
+    
+              width: 95%;
+              margin-right: 6em;
+    margin-top: 10em;
+  }
+
   span{
-    margin-top: 0.4em;
+    margin-top: 1em;
     font-size: 22px;
     font-weight: 700;
     
 }
-  .Services {
-    margin-top: 25em;
-    top: 30em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 100px;
-}
 
-.box img {
+.box img {    position: relative;
+
   padding: 3px;
     width: 100%;
     height: 250px;
     object-fit: cover;
 }
   .box {
-      width: 400px;
-      height: 450px;
+      
+   width: 100%;  
+    height: 450px;
   }
 
   .btn {
@@ -116,32 +123,3 @@ span{
   }
 }
 
-@media (max-width: 1280px) {
-  .box {
-      width: 200px;
-      height: 200px;
-  }
-
-  .btn {
-      font-size: 16px;
-  }
-
-  span {
-      font-size: 14px;
-  }
-}
-
-@media (min-width: 3840px) {
-  .box {
-      width: 500px;
-      height: 500px;
-  }
-
-  .btn {
-      font-size: 26px;
-  }
-
-  span {
-      font-size: 24px;
-  }
-}

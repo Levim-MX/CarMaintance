@@ -163,3 +163,29 @@ gap: 10px;
 
   background-color: red;
  }
+
+
+
+
+
+
+ @media (max-width: 1920px) {
+  .icon {
+    position: absolute;
+    left: 65.2%;
+    margin-top: 12px;
+    
+ 
+     color: #278ee9bf;
+     font-size: 1.4rem;
+   }
+
+   .form-footer .error-message{
+    position: absolute;
+    font-size: 1.1em;
+    top: 26%;
+    right: 1%;
+  
+   }
+
+}

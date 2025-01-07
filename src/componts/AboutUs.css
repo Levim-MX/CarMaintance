@@ -1,118 +1,47 @@
 .About {
-    height: 550px;
-    width: 2600px; 
-    
-    background: linear-gradient(to right, #fff6f8 , #fafafa32 );
-    border-radius: 20px;
-    position: relative;
-    left: 4em;
-    top: 50em;
-    padding: 40px;
-   
-    text-align: center;
-    direction: rtl; /* للتأكد من أن النص يظهر بشكل صحيح باللغة العربية */
-  }
-  
-  .about-us-content{
-      position: static;
-      
-      margin-left: 90em;
-      
-  }
-  .About h1 {
-    font-size: 2.5rem;
-    margin-bottom: 10px;
-    color: #000000;
-  }
-  
-  .About h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #278de9;
-
-  }
-  
-  .About p {
-    font-size: 1.2rem;
-    line-height: 1.8;
-    margin-bottom: 20px;
-    color: #000000;
-    font-weight: 800;
-  }
-  
-  .About ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .About ul li {
-    font-weight: 600;
-    font-size: 1.2rem;
-    color: #000000b7;
-    margin: 5px 0;
-  }
-
-  .The-imag{filter: drop-shadow(0 0 15px rgba(0, 0, 0, 0.5));
-    mask-image: linear-gradient(white, transparent); /* تأثير التلاشي من الأعلى للأسفل */
-  -webkit-mask-image: linear-gradient(white, transparent); /* دعم لمتصفح Chrome */
-    position: absolute;
-    opacity: 1;
-  z-index: -1;
-    height: 400px;
-    width: 2480px; 
-  }
-
-  .The-imag img{
-    border-radius: 5em;
-
-    width: 100%;
-    max-height: 500px;
-    object-fit: cover;
-
-  }
-
-  @media (max-width: 1920px) {
-    
-    .About {
-     position: absolute;
-    width: 100%;
-    }
-    .about-us-content {
-      position: relative;
-      top: 1em;
-      right: 10em;
-        margin-left: 0;
-    }
-    .About h1, .About h2, .About p, .About ul li {
-        font-size: 90%;
-    }
+  position: relative;
+  top: 30vh;
+  width: 100%; /* عرض الكومبوننت ليملأ الشاشة بالكامل */
+  max-width: 1200px; /* تحديد الحد الأقصى للعرض */
+  left: 30%;
+  padding: 40px; /* مساحة داخلية حول المحتوى */
+  background: linear-gradient(to right, #fff6f8, #f9f9f9); /* لون خلفية تدريجي */
+  border-radius: 15px; /* حواف دائرية قليلاً */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* ظل خفيف لإبراز الكومبوننت */
+  text-align: center; /* توسيط النصوص */
+  direction: rtl; /* دعم الكتابة من اليمين لليسار */
 }
 
-@media (max-width: 1280px) {
-    .About {
-        left: 0;
-        padding: 10px;
-    }
-    .about-us-content {
-        margin-left: 0;
-    }
-    .About h1, .About h2 {
-        font-size: 1.5rem;
-    }
-    .About p, .About ul li {
-        font-size: 1rem;
-    }
+
+.about-us-content h1 {
+  font-size: 2.5rem; /* حجم العنوان الأساسي */
+  color: #000; /* لون النص */
+  margin-bottom: 15px; /* مسافة أسفل العنوان */
 }
 
-@media (min-width: 3840px) {
-    .About {
-        max-width: 3000px;
-        padding: 60px;
-    }
-    .about-us-content {
-        margin-left: 100em;
-    }
-    .About h1, .About h2, .About p, .About ul li {
-        font-size: 110%;
-    }
+.about-us-content h2 {
+  font-size: 2rem; /* حجم العنوان الفرعي */
+  color: #278de9; /* لون مميز للعنوان الفرعي */
+  margin-bottom: 20px; /* مسافة أسفل العنوان */
 }
+
+.about-us-content p {
+  font-size: 1.2rem; /* حجم النص */
+  color: #333; /* لون نص واضح */
+  line-height: 1.8; /* ارتفاع الأسطر لتحسين القابلية للقراءة */
+  margin-bottom: 20px; /* مسافة أسفل النصوص */
+}
+
+.about-us-content ul {
+  list-style: none; /* إزالة النقط من القائمة */
+  padding: 0; /* إزالة المسافات الافتراضية */
+  margin-bottom: 20px; /* مسافة أسفل القائمة */
+}
+
+.about-us-content ul li {
+  font-size: 1.2rem; /* حجم النص داخل القائمة */
+  font-weight: 600; /* جعل النص داخل القائمة سميكًا */
+  color: #555; /* لون النص */
+  margin-bottom: 10px; /* مسافة بين كل عنصر */
+}
+

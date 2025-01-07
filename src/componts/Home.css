@@ -72,21 +72,22 @@
   
       .home .home-text h1 {
         position: relative;
-        right: 7em;
+        left: 3em;
 
           font-size: 1.2em;
       }
   
       .home .home-text p {
             position: relative;
-            right: 11em;
+            right: 2em;
           font-size: 1.2em;
       }
   
       .home .home-text .button-box .btn {
         position: relative;
-        right: 3em;
-          font-size: 1.2em;
+        left: 6.6em;
+
+        font-size: 1.2em;
       }
   }
   

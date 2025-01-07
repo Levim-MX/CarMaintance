@@ -6,10 +6,7 @@ function AboutUs(){
 
     return (
         <section className="About" id='About'>
-            <div className='The-imag'>
-            <img src="/images/working-car.jpg" alt="" />
-
-            </div>
+            
           <div className="about-us-content">
             <h1>من نحن ؟</h1>
             <h2>كارفكس</h2>

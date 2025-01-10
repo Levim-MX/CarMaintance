@@ -7,7 +7,12 @@
     font-family: "Roboto", sans-serif;
     font-family: "Rubik", sans-serif;
   }
+
+
+
+
 .HeaderBar {
+    
     position: static;
     top: 0;
     left: 0;
@@ -91,4 +96,4 @@
         font-size: 24px;
         margin-left: 50px;
     }
-}
+} 

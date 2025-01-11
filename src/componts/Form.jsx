@@ -16,12 +16,11 @@ const Form = ({ onCloseForm }) => {
   // تخطي التحقق ونقل المستخدم مباشرة إلى الخطوة الثانية
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    console.log("تم الضغط على تسجيل الدخول");
-
-    setCurrentStep(2); // نقل المستخدم إلى الخطوة الثانية
-
-    console.log("تم تحديث الحالة إلى الخطوة الثانية:", currentStep); // التحقق من الحالة
-
+    if (loginEmail === "test@example.com" && loginPassword === "123456") {
+      setCurrentStep(2); // نقل المستخدم إلى الخطوة الثانية
+    } else {
+      alert("البريد الإلكتروني أو كلمة المرور غير صحيحين.");
+    }
   };
 
   const handleBack = () => {

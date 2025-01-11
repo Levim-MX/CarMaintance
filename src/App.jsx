@@ -18,8 +18,8 @@ import AdminDashboard from './componts/Admin/AdminDashboard.jsx';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [showForm, setShowForm] = useState(false); // للتحكم بعرض الفورم
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // لتحديد حالة تسجيل الدخول
+  const [showForm, setShowForm] = useState(false); // التحكم بعرض الفورم
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // تحديد حالة تسجيل الدخول
 
   useEffect(() => {
     // تعيين حالة التحميل بعد تحميل الصفحة

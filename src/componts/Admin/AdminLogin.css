@@ -52,6 +52,10 @@
    
    
  }
+ .errorMessage{
+  font-size: large;
+  color: red;
+ }
  @media (max-width: 1920px) {
     .icon{position: absolute;
           left: 58%;

@@ -28,7 +28,7 @@ function Home() {
         <div className="button-box">
         <a href="#"  className='btn' onClick={() => scrollToSection('Services')}>تعرف على خدماتنا</a>
 
-          <a href="#contact" className="btn">تواصل معنا</a>
+          <a href="#contact" className="btn"  onClick={() => scrollToSection('footer')}>تواصل معنا</a>
         </div>
       </div>
 

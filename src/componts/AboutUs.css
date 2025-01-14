@@ -1,6 +1,6 @@
 .About {
   position: relative;
-  top: 30vh;
+  top: 10vh;
   width: 100%; /* عرض الكومبوننت ليملأ الشاشة بالكامل */
   max-width: 1200px; /* تحديد الحد الأقصى للعرض */
   left: 30%;
@@ -45,3 +45,15 @@
   margin-bottom: 10px; /* مسافة بين كل عنصر */
 }
 
+
+@media (max-width: 1920px) {
+
+  .About {
+   width: 800px;
+
+  }
+
+
+
+
+}

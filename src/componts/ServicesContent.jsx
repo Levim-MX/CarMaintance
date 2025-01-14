@@ -51,17 +51,17 @@ function ServicesContent({ onServiceClick }){
                     <img src="/images/oilChange.jpg" alt="" />
                     
                     
-                      <button className='btn' id='btn' onClick={onServiceClick}> تبديل زيت السيارة  </button>
+                      <button className='btn' id='btn' onClick={onServiceClick}> تبديل زيت  وفلاتر السيارة  </button>
                       <span>100$</span>
                       
                   </div>  
 
                    {/* card 5 */}
                   <div className='box'>
-                    <img src="/images/audiCarEngin.jpg" alt="" />
+                    <img src="/images/car battrey.jpg" alt="" />
                     
                     
-                      <button className='btn' id='btn' onClick={onServiceClick}> صيانة المحرك </button>
+                      <button className='btn' id='btn' onClick={onServiceClick}>  فحص وتبديل البطارية  </button>
                       <span>100$</span>
                     
                   </div> 
@@ -77,10 +77,10 @@ function ServicesContent({ onServiceClick }){
                   </div>
                            {/* card 7 */}
                            <div className='box'>
-                    <img src="/images/audiCarEngin.jpg" alt="" />
+                    <img src="/images/wiers.jpg" alt="" />
                     
                     
-                      <button className='btn' id='btn' onClick={onServiceClick}> صيانة المحرك </button>
+                      <button className='btn' id='btn' onClick={onServiceClick}> إصلاح أنظمة الكهرباء   </button>
                       <span>150$</span>
                       
                   </div>

@@ -235,6 +235,8 @@ const Form = ({ onCloseForm }) => {
                     <option value="Car Washing">غسل وتنظيف المركبة</option>
                     <option value="Car Brakes">صيانة المكابح</option>
                     <option value="Car Wheels">صيانة الإطارات</option>
+                    <option value="Car Wheels">إصلاح أنظمة الكهرباء  </option>
+                    <option value="Car Wheels">فحص وتبديل البطارية </option>
                   </select>
                 </div>
 

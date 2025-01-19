@@ -23,11 +23,12 @@ function Home() {
           
         </h1>
         <p>
+          
           خدماتنا تشمل صيانة كافة اجزاء السيارة ,بأحدث الأجهزة وبأيادي محترفة ومتمرسة
         </p>
         <div className="button-box">
         <a href="#"  className='btn' onClick={() => scrollToSection('Services')}>تعرف على خدماتنا</a>
-
+           
           <a href="#contact" className="btn"  onClick={() => scrollToSection('footer')}>تواصل معنا</a>
         </div>
       </div>

@@ -53,6 +53,24 @@
     color: #278de9;
   }
 
+  .admin-login-btn {
+    margin-left: 20px;
+    padding: 8px 16px;
+    background-color: #278de9;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .admin-login-btn:hover {
+    background-color: #0966b7;
+    transform: scale(1.05);
+  }
+  
+
   @media (max-width: 1920px) {
     .HeaderBar {
         padding: 15px 5%;

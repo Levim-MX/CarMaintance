@@ -163,17 +163,26 @@ gap: 10px;
 
   background-color: red;
  }
-
+ .custom-select{
+  position: relative;
+  top: 12px;
+}
 
 
 
 
 
  @media (max-width: 1920px) {
+
+
+form {
+
+  transform: scale(0.8); /* يصغر الفورم بنسبة 80% */
+}
   .icon {
     position: absolute;
-    left: 58.8%;
-    margin-top: 12px;
+    margin-left: 15%;
+     margin-top: 12px;
     
  
      color: #278ee9bf;

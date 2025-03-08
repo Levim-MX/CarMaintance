@@ -18,7 +18,8 @@ import AdminDashboard from './componts/Admin/AdminDashboard.jsx';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [showForm, setShowForm] = useState(false); // التحكم بعرض الفورم
+  const [showForm, setShowForm] = useState(false); // التحكم بعرض الفورم 
+  const [selectedService, setSelectedService] = useState(""); // حفظ نوع الخدمة المختارة
   const [isAuthenticated, setIsAuthenticated] = useState(false); // تحديد حالة تسجيل الدخول
 
   useEffect(() => {
@@ -28,13 +29,15 @@ function App() {
   }, []);
 
   // دالة لإظهار الفورم عند اختيار خدمة
-  const handleShowForm = () => {
+  const handleShowForm = (service) => {
+    setSelectedService(service);
     setShowForm(true);
   };
 
   // دالة لإخفاء الفورم والعودة للصفحة الرئيسية
   const handleCloseForm = () => {
     setShowForm(false);
+    setSelectedService("");
   };
 
   // دالة لتسجيل الدخول
@@ -79,7 +82,7 @@ function App() {
                 </>
               )}
 
-              {showForm && <Form onCloseForm={handleCloseForm} />}
+              {showForm && <Form onCloseForm={handleCloseForm} selectedService={selectedService} />}
             </>
           }
         />

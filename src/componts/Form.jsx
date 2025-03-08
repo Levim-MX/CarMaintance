@@ -1,73 +1,63 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "./Form.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faUser, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
-const Form = ({ onCloseForm }) => {
+const Form = ({ onCloseForm, selectedService }) => {
+  // حالة لتخزين نوع الخدمة المختارة في الفورم
+  const [selectedCarService, setSelectedCarService] = useState("");
+
+  // الحالة الأساسية للنموذج
   const [currentStep, setCurrentStep] = useState(1);
   const [isChecked, setIsChecked] = useState(false);
   const [showError, setShowError] = useState(false);
-  const [isReturningUser, setIsReturningUser] = useState(false); // حالة المستخدم العائد
+
+  // حالة المستخدم العائد (لأصحاب الحساب المسجل مسبقاً)
+  const [isReturningUser, setIsReturningUser] = useState(false);
   const [loginEmail, setLoginEmail] = useState(""); // البريد الإلكتروني للمستخدم العائد
   const [loginPassword, setLoginPassword] = useState(""); // كلمة المرور للمستخدم العائد
 
-  // تخطي التحقق ونقل المستخدم مباشرة إلى الخطوة الثانية
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    if (loginEmail === "test@example.com" && loginPassword === "123456") {
-      setCurrentStep(2); // نقل المستخدم إلى الخطوة الثانية
-    } else {
-      alert("البريد الإلكتروني أو كلمة المرور غير صحيحين.");
-    }
-  };
-
-  const handleBack = () => {
-    setCurrentStep(1); // العودة إلى الخطوة الأولى
-  };
-
-  const handleNext = (e) => {
-    e.preventDefault();
-    if (!isValid) {
-      alert("يرجى تصحيح الأخطاء قبل المتابعة.");
-    } else {
-      setCurrentStep(2); // الانتقال إلى الخطوة الثانية
-
-    }
-  };
-
-  const handleCheckboxChange = () => {
-    setIsChecked(!isChecked);
-    setShowError(false); // إخفاء رسالة الخطأ عند تحديد المربع
-  };
-
+  // حالة رقم الهاتف والتحقق منه
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isValid, setIsValid] = useState(true);
 
+  // تحديث نوع الخدمة عند تحميل الفورم
+  useEffect(() => {
+    if (selectedService) {
+      setSelectedCarService(selectedService);
+    }
+  }, [selectedService]);
+
+  // دالة التحقق من رقم الهاتف
   const validatePhoneNumber = (phoneNumber) => {
     const normalizedNumber = phoneNumber.replace(/\D/g, ""); // إزالة أي رموز غير أرقام
     const iraqRegex = /^(9647\d{9}|07\d{9}|7\d{8})$/; // الأنماط المقبولة
     return iraqRegex.test(normalizedNumber);
   };
 
+  // عند تغيير رقم الهاتف
   const handleChange = (value) => {
     setPhoneNumber(value);
     setIsValid(validatePhoneNumber(value));
   };
 
+  // عند التركيز على حقل رقم الهاتف
   const handleFocus = () => {
     if (phoneNumber.startsWith("964")) {
       setPhoneNumber(phoneNumber.slice(3)); // إزالة المقدمة الدولية 964
     }
   };
 
+  // عند فقدان التركيز على رقم الهاتف
   const handleBlur = () => {
     if (!phoneNumber.startsWith("964") && !phoneNumber.startsWith("07")) {
       setPhoneNumber(`964${phoneNumber}`); // إعادة المقدمة الدولية إذا لم يبدأ الرقم بـ 07
     }
   };
 
+  // دالة إرسال نموذج معلومات المركبة
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (!isChecked) {
@@ -75,6 +65,37 @@ const Form = ({ onCloseForm }) => {
     } else {
       alert("تم تأكيد الحجز بنجاح!");
     }
+  };
+
+  // دالة إرسال نموذج تسجيل الدخول للمستخدم العائد
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    if (loginEmail === "test@example.com" && loginPassword === "123456") {
+      setCurrentStep(2); // نقل المستخدم إلى الخطوة الثانية (معلومات المركبة)
+    } else {
+      alert("البريد الإلكتروني أو كلمة المرور غير صحيحين.");
+    }
+  };
+
+  // دالة الانتقال للرجوع إلى الخطوة الأولى (التسجيل الشخصي)
+  const handleBack = () => {
+    setCurrentStep(1);
+  };
+
+  // دالة الانتقال للخطوة الثانية (معلومات المركبة) في حالة التسجيل الجديد
+  const handleNext = (e) => {
+    e.preventDefault();
+    if (!isValid) {
+      alert("يرجى تصحيح الأخطاء قبل المتابعة.");
+    } else {
+      setCurrentStep(2);
+    }
+  };
+
+  // دالة تغيير حالة اختيار المربع (الشروط)
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+    setShowError(false);
   };
 
   return (
@@ -111,22 +132,14 @@ const Form = ({ onCloseForm }) => {
             <button type="submit" className="btn2">
               تسجيل الدخول
             </button>
-            <button
-              type="button"
-              className="btn2"
-              onClick={() => setIsReturningUser(false)}
-            >
+            <button type="button" className="btn2" onClick={() => setIsReturningUser(false)}>
               العودة للتسجيل
             </button>
             <div className="closeBtn">
-                    <button
-                      type="button"
-                      className="btn3"
-                      onClick={onCloseForm}
-                    >
-                      إغلاق
-                    </button>
-                  </div>
+              <button type="button" className="btn3" onClick={onCloseForm}>
+                إغلاق
+              </button>
+            </div>
           </div>
         </form>
       )}
@@ -145,19 +158,11 @@ const Form = ({ onCloseForm }) => {
                   <FontAwesomeIcon icon={faUser} className="icon" />
                 </div>
                 <div className="form-group">
-                  <input
-                    type="email"
-                    placeholder="example@gmail.com الايميل"
-                    required
-                  />
+                  <input type="email" placeholder="example@gmail.com الايميل" required />
                   <FontAwesomeIcon icon={faEnvelope} className="icon" />
                 </div>
                 <div className="form-group">
-                  <input
-                    type="password"
-                    placeholder="كلمة السر"
-                    required
-                  />
+                  <input type="password" placeholder="كلمة السر" required />
                   <FontAwesomeIcon icon={faLock} className="icon" />
                 </div>
                 <div className="form-group">
@@ -171,41 +176,28 @@ const Form = ({ onCloseForm }) => {
                     required
                     containerClass="phone-input"
                   />
-                  {!isValid && (
-                    <p className="error-message">رقم الهاتف غير صالح</p>
-                  )}
+                  {!isValid && <p className="error-message">رقم الهاتف غير صالح</p>}
                 </div>
               </div>
               <div className="form-footer">
                 <p>سيتم خزن وتشفير جميع البيانات لضمان السرية</p>
                 <button type="submit">التالي</button>
-                <button
-                  type="button"
-                  className="btn2"
-                  onClick={() => setIsReturningUser(true)}
-                >
+                <button type="button" className="btn2" onClick={() => setIsReturningUser(true)}>
                   اضغط هنا اذا كان لديك حساب مسجل مسبقا
                 </button>
                 <div className="closeBtn">
-                    <button
-                      type="button"
-                      className="btn3"
-                      onClick={onCloseForm}
-                    >
-                      إغلاق
-                    </button>
-                  </div>
+                  <button type="button" className="btn3" onClick={onCloseForm}>
+                    إغلاق
+                  </button>
+                </div>
               </div>
             </form>
           )}
 
-          {/* الخطوة الثانية */}
+          {/* الخطوة الثانية: معلومات المركبة */}
           {currentStep === 2 && (
-                console.log("Rendering step 2 form..."),
-
-
+            console.log("Rendering step 2 form..."),
             <form onSubmit={handleFormSubmit}>
-            
               <div className="form-header">
                 <h1>معلومات المركبة</h1>
               </div>
@@ -227,27 +219,9 @@ const Form = ({ onCloseForm }) => {
                 </div>
 
                 <div className="form-group">
-                  <select id="carService" className="custom-select" required>
-                    <option value="">اختر نوع الخدمة</option>
-                    <option value="Oil Change">تغير زيت السيارة</option>
-                    <option value="Engine Maintenance">صيانة المحرك</option>
-                    <option value="Piston">صيانة بستم المحرك</option>
-                    <option value="Car Washing">غسل وتنظيف المركبة</option>
-                    <option value="Car Brakes">صيانة المكابح</option>
-                    <option value="Car Wheels">صيانة الإطارات</option>
-                    <option value="Car Wheels">إصلاح أنظمة الكهرباء  </option>
-                    <option value="Car Wheels">فحص وتبديل البطارية </option>
-                  </select>
+                  <input type="text" placeholder=" رقم شاصي المركبة " required />
                 </div>
-
-                <div className="form-group">
-                  <select id="carCrane" className="custom-select" required>
-                    <option value="">هل تحتاج إلى كرين سحب؟</option>
-                    <option value="YES">نعم، أحتاج إلى كرين سحب</option>
-                    <option value="NO">لا، سأحضر المركبة بنفسي</option>
-                  </select>
-                </div>
-
+                      
                 <div className="form-group">
                   <select id="carBranch" className="custom-select" required>
                     <option value="">اختر أقرب فرع عليك</option>
@@ -259,6 +233,114 @@ const Form = ({ onCloseForm }) => {
                     <option value="branch5">فرع الرصافة/ شارع الصناعة </option>
                   </select>
                 </div>
+
+                <div className="form-group">
+                  <select
+                    id="carService"
+                    className="custom-select"
+                    required
+                    value={selectedCarService}
+                    onChange={(e) => setSelectedCarService(e.target.value)}
+                  >
+                    <option value="">اختر نوع الخدمة</option>
+                    <option value="Oil Change">تغير زيت السيارة</option>
+                    <option value="Engine Maintenance">صيانة المحرك</option>
+                    <option value="Piston Change">صيانة بستم المحرك</option>
+                    <option value="Car Washing">غسل وتنظيف المركبة</option>
+                    <option value="Brake Maintenance">صيانة المكابح</option>
+                    <option value="Tire Maintenance">صيانة الإطارات</option>
+                    <option value="Electrical System Repair">صيانة أنظمة الكهرباء</option>
+                    <option value="Battery Replacement">فحص وتبديل البطارية</option>
+                  </select>
+                </div>
+
+                {/* إضافة حقول إضافية بناءً على الخدمة المختارة */}
+                {selectedCarService === "Oil Change" && (
+                  <div className="form-group">
+                    <label>اختر نوع الزيت</label>
+                    <select className="custom-select" required>
+                      <option value="">اختر نوع الزيت</option>
+                      <option value="Full Synthetic"> زيت تخليقي (60$)  </option>
+                      <option value="Semi Synthetic"> زيت نصف تخليقي(45$)  </option>
+                      <option value="Mineral">  زيت صناعي(35$)</option>
+                    </select>
+                  </div>
+                )}
+
+                {selectedCarService === "Car Washing" && (
+                  <div className="form-group">
+                    <label>اختر نوع الغسيل</label>
+                    <select className="custom-select" required>
+                      <option value="">اختر نوع الغسيل</option>
+                      <option value="Interior">  غسيل داخلي(20$)</option>
+                      <option value="Exterior"> غسيل خارجي(15$)</option>
+                      <option value="Full"> غسيل شامل(30$)</option>
+                    </select>
+                  </div>
+                )}
+
+  {selectedCarService === "Tire Maintenance" && (
+  <>
+    <div className="form-group">
+      <label>اختر الإطار </label>
+      <select className="custom-select" required>
+        <option value="">  الأطارات الصيفية</option>
+        <option value="summer1">Michelin Pilot Sport 4 (220$)</option>
+        <option value="summer2">Bridgestone Potenza RE-71R (250$)</option>
+        <option value="summer3">Continental ExtremeContact Sport (230$)</option>
+        <option value="">  الأطارات الشتوية</option>
+        <option value="winter1">Michelin X-Ice Snow (150$)</option>
+        <option value="winter2">Bridgestone Blizzak WS90 (160$)</option>
+        <option value="winter3">Continental VikingContact 7 (170$)</option>
+      </select>
+    </div>
+
+
+   
+  </>
+)}
+                   {selectedCarService === "Battery Replacement" && (
+                  <div className="form-group">
+                    <label>اختر خدمة البطارية</label>
+                    <select className="custom-select" required>
+                      <option value="">اختر خدمة البطارية</option>
+                      <option value="Battery Testing">اختبار البطارية (80$)</option>
+                      <option value="Battery Replacement">استبدال البطارية (150$)</option>
+                      <option value="Battery Charging">شحن البطارية (60$)</option>
+                 
+                    </select>
+                  </div>
+                )}
+
+              {selectedCarService === "Engine Maintenance" && (
+                  <div className="form-group">
+                    <label>اختر خدمة المحرك</label>
+                    <select className="custom-select" required>
+                      <option value=""> صيانة الاجزاء التالية.. </option>
+                      <option value="Spark Plugs">استبدال شمعات الإشعال (200$)</option>
+                      <option value="Fuel Injector Cleaning">تنظيف بخاخات الوقود (180$)</option>
+                      <option value="Timing Belt Replacement">استبدال سير التوقيت (250$)</option>
+                      <option value="Timing Belt Replacement">  جميع الخيارات  (500$)</option>
+
+                    </select>
+                  </div>
+                )}
+
+
+                  {selectedCarService === "Electrical System Repair" && (
+                  <div className="form-group">
+                    <label>اختر خدمة أنظمة الكهرباء</label>
+                    <select className="custom-select" required>
+                      <option value="">اختر الأجزاء المطلوب صيانتها  </option>
+                      <option value="Alternator Repair">إصلاح المولد (120$)</option>
+                      <option value="Starter Motor Repair">إصلاح موتور التشغيل (130$)</option>
+                      <option value="Wiring Diagnosis">تشخيص الأسلاك (100$)</option>
+                      <option value="Timing Belt Replacement">  جميع الخيارات  (320$)</option>
+
+                    </select>
+                  </div>
+                )}
+
               </div>
 
               <div className="form-footer">

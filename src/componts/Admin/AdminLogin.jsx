@@ -1,67 +1,72 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./AdminLogin.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 
 const AdminLogin = ({ onLogin }) => {
-  const navigate = useNavigate(); // Hook للتوجيه
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleLogin = () => {
-    // بيانات الدخول الافتراضية
     const adminEmail = "admin@gmail.com";
     const adminPassword = "1234";
 
     if (email === adminEmail && password === adminPassword) {
-      onLogin(); // تحديث حالة تسجيل الدخول
-      navigate("/admin/dashboard"); // الانتقال إلى صفحة الداشبورد
+      onLogin();
+      navigate("/admin/dashboard");
     } else {
-      // عرض رسالة خطأ عند إدخال بيانات خاطئة
       setErrorMessage("البريد الإلكتروني أو كلمة المرور غير صحيحة.");
     }
   };
 
   return (
-    <div className="container">
-      <form className="theFormCountinar" onSubmit={(e) => e.preventDefault()}>
-        {/* Header form */}
-        <div className="headerForm">
-          <h1>تسجيل دخول خاص بل أدمن</h1>
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4 lg:p-20 xl:p-32">
+      <form 
+        className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md lg:max-w-lg xl:max-w-xl"
+        onSubmit={(e) => e.preventDefault()}
+      >
+        {/* Header */}
+        <h1 className="text-2xl lg:text-3xl font-bold text-center mb-6 text-gray-700">تسجيل دخول خاص بل أدمن</h1>
+        
+        {/* Email Input */}
+        <div className="mb-4 relative">
+          <FontAwesomeIcon icon={faEnvelope} className="absolute left-3 top-3 text-gray-500" />
+          <input
+            type="email"
+            placeholder="Enter Admin Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            className="w-full pl-10 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg lg:text-xl"
+          />
         </div>
-        {/* Mid form */}
-        <div className="midForm">
-          <div>
-            <input
-              type="email"
-              placeholder="Enter Admin Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)} // تحديث البريد الإلكتروني
-              required
-            />
-            <FontAwesomeIcon icon={faEnvelope} className="icon" />
-          </div>
 
-          <div>
-            <input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)} // تحديث كلمة المرور
-              required
-            />
-            <FontAwesomeIcon icon={faLock} className="icon" />
-          </div>
+        {/* Password Input */}
+        <div className="mb-4 relative">
+          <FontAwesomeIcon icon={faLock} className="absolute left-3 top-3 text-gray-500" />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            className="w-full pl-10 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg lg:text-xl"
+          />
         </div>
-        {/* Footer form */}
-        <div className="footerForm">
-          {errorMessage && <p className="error-message">{errorMessage}</p>} {/* رسالة الخطأ */}
-          <button type="button" className="loginBtn" onClick={handleLogin}>
-            تسجيل الدخول
-          </button>
-        </div>
+
+        {/* Error Message */}
+        {errorMessage && <p className="text-red-500 text-sm lg:text-base text-center mb-4">{errorMessage}</p>}
+
+        {/* Login Button */}
+        <button 
+          type="button" 
+          className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition text-lg lg:text-xl"
+          onClick={handleLogin}
+        >
+          تسجيل الدخول
+        </button>
       </form>
     </div>
   );

@@ -1,59 +1,52 @@
 import React, { useState, useEffect } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
-import "./Form.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faUser, faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 
-const Form = ({ onCloseForm, selectedService }) => {
-  // حالة لتخزين نوع الخدمة المختارة في الفورم
+const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
+  // تخزين نوع الخدمة المختارة
   const [selectedCarService, setSelectedCarService] = useState("");
-
-  // الحالة الأساسية للنموذج
-  const [currentStep, setCurrentStep] = useState(1);
-  const [isChecked, setIsChecked] = useState(false);
-  const [showError, setShowError] = useState(false);
-
-  // حالة المستخدم العائد (لأصحاب الحساب المسجل مسبقاً)
-  const [isReturningUser, setIsReturningUser] = useState(false);
-  const [loginEmail, setLoginEmail] = useState(""); // البريد الإلكتروني للمستخدم العائد
-  const [loginPassword, setLoginPassword] = useState(""); // كلمة المرور للمستخدم العائد
-
-  // حالة رقم الهاتف والتحقق منه
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [isValid, setIsValid] = useState(true);
-
-  // تحديث نوع الخدمة عند تحميل الفورم
   useEffect(() => {
     if (selectedService) {
       setSelectedCarService(selectedService);
     }
   }, [selectedService]);
 
-  // دالة التحقق من رقم الهاتف
+  // إذا كان المستخدم مسجَّل نبدأ من الخطوة 2 (معلومات المركبة)
+  const [currentStep, setCurrentStep] = useState(isAuthenticated ? 2 : 1);
+  const [isChecked, setIsChecked] = useState(false);
+  const [showError, setShowError] = useState(false);
+  
+  // حالة تسجيل الدخول للمستخدم العائد (عند عدم تسجيل الدخول)
+  const [isReturningUser, setIsReturningUser] = useState(false);
+  const [loginPassword, setLoginPassword] = useState("");
+
+  // حالة رقم الهاتف والتحقق منه
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [isValid, setIsValid] = useState(true);
+
+  // دالة التحقق من رقم الهاتف (حسب الصيغة العراقية)
   const validatePhoneNumber = (phoneNumber) => {
-    const normalizedNumber = phoneNumber.replace(/\D/g, ""); // إزالة أي رموز غير أرقام
-    const iraqRegex = /^(9647\d{9}|07\d{9}|7\d{8})$/; // الأنماط المقبولة
+    const normalizedNumber = phoneNumber.replace(/\D/g, "");
+    const iraqRegex = /^(9647\d{9}|07\d{9}|7\d{8})$/;
     return iraqRegex.test(normalizedNumber);
   };
 
-  // عند تغيير رقم الهاتف
   const handleChange = (value) => {
     setPhoneNumber(value);
     setIsValid(validatePhoneNumber(value));
   };
 
-  // عند التركيز على حقل رقم الهاتف
   const handleFocus = () => {
     if (phoneNumber.startsWith("964")) {
-      setPhoneNumber(phoneNumber.slice(3)); // إزالة المقدمة الدولية 964
+      setPhoneNumber(phoneNumber.slice(3));
     }
   };
 
-  // عند فقدان التركيز على رقم الهاتف
   const handleBlur = () => {
     if (!phoneNumber.startsWith("964") && !phoneNumber.startsWith("07")) {
-      setPhoneNumber(`964${phoneNumber}`); // إعادة المقدمة الدولية إذا لم يبدأ الرقم بـ 07
+      setPhoneNumber(`964${phoneNumber}`);
     }
   };
 
@@ -61,26 +54,28 @@ const Form = ({ onCloseForm, selectedService }) => {
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (!isChecked) {
-      setShowError(true); // إظهار رسالة الخطأ عند عدم اختيار المربع
+      setShowError(true);
     } else {
       alert("تم تأكيد الحجز بنجاح!");
+      onCloseForm(); // إخفاء الفورم بعد النجاح
     }
   };
 
-  // دالة إرسال نموذج تسجيل الدخول للمستخدم العائد
+  // دالة إرسال نموذج تسجيل الدخول للمستخدم العائد باستخدام رقم الهاتف وكلمة المرور
   const handleLoginSubmit = (e) => {
     e.preventDefault();
-    if (loginEmail === "test@example.com" && loginPassword === "123456") {
-      setCurrentStep(2); // نقل المستخدم إلى الخطوة الثانية (معلومات المركبة)
+    // مثال تحقق: رقم الهاتف "9647723456789" وكلمة المرور "123456"
+    if (phoneNumber === "9647723456789" && loginPassword === "123456") {
+      onLogin("mahmood"); // تحديث حالة المستخدم في المكون الأب
+      // بعد نجاح تسجيل الدخول، يتم إخفاء الفورم
+      onCloseForm();
     } else {
-      alert("البريد الإلكتروني أو كلمة المرور غير صحيحين.");
+      alert("رقم الهاتف أو كلمة المرور غير صحيحين.");
     }
   };
 
-  // دالة الانتقال للرجوع إلى الخطوة الأولى (التسجيل الشخصي)
-  const handleBack = () => {
-    setCurrentStep(1);
-  };
+  // دالة الرجوع للخطوة الأولى (بيانات التسجيل الشخصية)
+  const handleBack = () => setCurrentStep(1);
 
   // دالة الانتقال للخطوة الثانية (معلومات المركبة) في حالة التسجيل الجديد
   const handleNext = (e) => {
@@ -99,73 +94,88 @@ const Form = ({ onCloseForm, selectedService }) => {
   };
 
   return (
-    <section className="form-container">
-      {/* نموذج تسجيل الدخول للمستخدمين العائدين */}
-      {isReturningUser && (
-        <form onSubmit={handleLoginSubmit}>
-          <div className="form-header">
-            <h1>تسجيل الدخول</h1>
+    <section className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      {isReturningUser ? (
+        // نموذج تسجيل الدخول للمستخدم العائد
+        <form onSubmit={handleLoginSubmit} className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
+          <div className="mb-4 text-center">
+            <h1 className="text-2xl font-bold">تسجيل الدخول</h1>
           </div>
-          <div className="form-body">
-            <div className="form-group">
-              <input
-                type="email"
-                placeholder="البريد الإلكتروني"
+          <div className="space-y-4">
+            <div className="relative">
+              <PhoneInput
+                country={"iq"}
+                value={phoneNumber}
+                onChange={handleChange}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                enableAreaCodes={true}
                 required
-                value={loginEmail}
-                onChange={(e) => setLoginEmail(e.target.value)}
+                containerClass="w-full"
+                inputClass="w-full p-3 border border-gray-300 rounded shadow pl-[50px]"
               />
-              <FontAwesomeIcon icon={faEnvelope} className="icon" />
+              {!isValid && (
+                <p className="text-red-500 text-sm mt-1">رقم الهاتف غير صالح</p>
+              )}
             </div>
-            <div className="form-group">
+            <div className="relative">
               <input
                 type="password"
                 placeholder="كلمة المرور"
                 required
                 value={loginPassword}
                 onChange={(e) => setLoginPassword(e.target.value)}
+                className="w-full p-3 border border-gray-300 rounded shadow"
               />
-              <FontAwesomeIcon icon={faLock} className="icon" />
+              <FontAwesomeIcon icon={faLock} className="absolute right-3 top-3 text-gray-500" />
             </div>
           </div>
-          <div className="form-footer">
-            <button type="submit" className="btn2">
+          <div className="mt-6 flex flex-col items-center">
+            <button type="submit" className="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">
               تسجيل الدخول
             </button>
-            <button type="button" className="btn2" onClick={() => setIsReturningUser(false)}>
+            <button
+              type="button"
+              className="mt-4 w-full bg-gray-300 text-gray-800 p-3 rounded hover:bg-gray-400"
+              onClick={() => setIsReturningUser(false)}
+            >
               العودة للتسجيل
             </button>
-            <div className="closeBtn">
-              <button type="button" className="btn3" onClick={onCloseForm}>
+            <div className="mt-4">
+              <button type="button" className="text-red-600 hover:underline" onClick={onCloseForm}>
                 إغلاق
               </button>
             </div>
           </div>
         </form>
-      )}
-
-      {/* نموذج التسجيل الجديد */}
-      {!isReturningUser && (
+      ) : (
         <>
           {currentStep === 1 && (
-            <form onSubmit={handleNext}>
-              <div className="form-header">
-                <h1>معلومات التسجيل الشخصية</h1>
+            // نموذج التسجيل الجديد (الخطوة 1: بيانات شخصية)
+            <form onSubmit={handleNext} className="w-full  max-w-md bg-white p-6 rounded-lg shadow-lg">
+              <div className="mb-4 text-center">
+                <h1 className="text-2xl font-bold">معلومات التسجيل الشخصية</h1>
               </div>
-              <div className="form-body">
-                <div className="form-group">
-                  <input type="text" placeholder="الاسم الثلاثي" required />
-                  <FontAwesomeIcon icon={faUser} className="icon" />
+              <div className="space-y-4">
+                <div className="relative">
+                  <input 
+                    type="text" 
+                    placeholder="الاسم الثلاثي" 
+                    required 
+                    className="w-full p-3 border border-gray-300 rounded shadow" 
+                  />
+                  <FontAwesomeIcon icon={faUser} className="absolute right-3 top-3 text-gray-500" />
                 </div>
-                <div className="form-group">
-                  <input type="email" placeholder="example@gmail.com الايميل" required />
-                  <FontAwesomeIcon icon={faEnvelope} className="icon" />
+                <div className="relative">
+                  <input 
+                    type="password" 
+                    placeholder="كلمة السر" 
+                    required 
+                    className="w-full p-3 border border-gray-300 rounded shadow" 
+                  />
+                  <FontAwesomeIcon icon={faLock} className="absolute right-3 top-3 text-gray-500" />
                 </div>
-                <div className="form-group">
-                  <input type="password" placeholder="كلمة السر" required />
-                  <FontAwesomeIcon icon={faLock} className="icon" />
-                </div>
-                <div className="form-group">
+                <div className="relative">
                   <PhoneInput
                     country={"iq"}
                     value={phoneNumber}
@@ -174,19 +184,47 @@ const Form = ({ onCloseForm, selectedService }) => {
                     onBlur={handleBlur}
                     enableAreaCodes={true}
                     required
-                    containerClass="phone-input"
+                    containerClass="w-full"
+                    inputClass="w-full p-3 border border-gray-300 rounded shadow pl-[50px]"
                   />
-                  {!isValid && <p className="error-message">رقم الهاتف غير صالح</p>}
+                  {!isValid && (
+                    <p className="text-red-500 text-sm mt-1">رقم الهاتف غير صالح</p>
+                  )}
                 </div>
               </div>
-              <div className="form-footer">
-                <p>سيتم خزن وتشفير جميع البيانات لضمان السرية</p>
-                <button type="submit">التالي</button>
-                <button type="button" className="btn2" onClick={() => setIsReturningUser(true)}>
-                  اضغط هنا اذا كان لديك حساب مسجل مسبقا
-                </button>
-                <div className="closeBtn">
-                  <button type="button" className="btn3" onClick={onCloseForm}>
+              <div className="mt-6 flex flex-col items-center w-full relative text-right">
+                <p className="mb-8 text-gray-600 text-xl font-medium">
+                  بالضغط على "إرسال المعلومات وتأكيد الحجز"، أؤكد صحة المعلومات وأوافق على اتصال فريق الدعم لتأكيد الحجز.
+                </p>
+                <div className="relative flex items-center gap-2 w-full justify-end">
+                  <input
+                    type="checkbox"
+                    id="confirmation-checkbox"
+                    onChange={handleCheckboxChange}
+                    checked={isChecked}
+                    className="w-5 h-5"
+                  />
+                  <label htmlFor="confirmation-checkbox" className="text-xl">
+                    أوافق على الشروط
+                  </label>
+                </div>
+                {showError && (
+                  <p className="absolute text-red-500 text-lg top-1/2 right-1">
+                    يرجى النقر على المربع قبل تأكيد الحجز.
+                  </p>
+                )}
+                <div className="flex flex-col items-center gap-4 mt-4 w-[120%]">
+                  <button type="submit" className="w-1/2 bg-blue-600 text-white p-3 rounded hover:bg-blue-700 transition text-base">
+                    التالي
+                  </button>
+                  <button
+                    type="button"
+                    className="w-1/2 bg-gray-300 text-white p-3 rounded hover:bg-gray-400 transition text-base"
+                    onClick={() => setIsReturningUser(true)}
+                  >
+                    اضغط هنا اذا كان لديك حساب مسجل مسبقا
+                  </button>
+                  <button type="button" className="w-1/2 bg-red-600 text-white p-3 rounded hover:bg-red-700 transition text-base" onClick={onCloseForm}>
                     إغلاق
                   </button>
                 </div>
@@ -194,16 +232,15 @@ const Form = ({ onCloseForm, selectedService }) => {
             </form>
           )}
 
-          {/* الخطوة الثانية: معلومات المركبة */}
           {currentStep === 2 && (
-            console.log("Rendering step 2 form..."),
-            <form onSubmit={handleFormSubmit}>
-              <div className="form-header">
-                <h1>معلومات المركبة</h1>
+            // نموذج معلومات المركبة (الخطوة 2)
+            <form onSubmit={handleFormSubmit} className="w-full max-w-md bg-white p-6 rounded-lg shadow-lg">
+              <div className="mb-4 text-center">
+                <h1 className="text-2xl font-bold">معلومات المركبة</h1>
               </div>
-              <div className="form-body">
-                <div className="form-group">
-                  <select id="carType" className="custom-select" required>
+              <div className="space-y-4">
+                <div className="relative">
+                  <select id="carType" className="w-full p-3 border border-gray-300 rounded" required>
                     <option value="">اختر نوع المركبة</option>
                     <option value="AUDI A3">أودي A3</option>
                     <option value="AUDI A4">AUDI A4</option>
@@ -217,27 +254,10 @@ const Form = ({ onCloseForm, selectedService }) => {
                     <option value="AUDI R8">AUDI R8</option>
                   </select>
                 </div>
-
-                <div className="form-group">
-                  <input type="text" placeholder=" رقم شاصي المركبة " required />
-                </div>
-                      
-                <div className="form-group">
-                  <select id="carBranch" className="custom-select" required>
-                    <option value="">اختر أقرب فرع عليك</option>
-                    <option value="branch1">فرع شارع فلسطين/نادي التركماني</option>
-                    <option value="branch2">فرع الكرادة/ مجمع مشن </option>
-                    <option value="branch3">فرع الكرخ/البياع الصناعية </option>
-                    <option value="branch4">فرع الحرية / شارع الربيع </option>
-                    <option value="branch5">فرع الرصافة/الشيخ عمر </option>
-                    <option value="branch5">فرع الرصافة/ شارع الصناعة </option>
-                  </select>
-                </div>
-
-                <div className="form-group">
+                <div className="relative">
                   <select
                     id="carService"
-                    className="custom-select"
+                    className="w-full p-3 border border-gray-300 rounded"
                     required
                     value={selectedCarService}
                     onChange={(e) => setSelectedCarService(e.target.value)}
@@ -249,136 +269,109 @@ const Form = ({ onCloseForm, selectedService }) => {
                     <option value="Car Washing">غسل وتنظيف المركبة</option>
                     <option value="Brake Maintenance">صيانة المكابح</option>
                     <option value="Tire Maintenance">صيانة الإطارات</option>
-                    <option value="Electrical System Repair">صيانة أنظمة الكهرباء</option>
+                    <option value="Electrical System Repair">إصلاح أنظمة الكهرباء</option>
                     <option value="Battery Replacement">فحص وتبديل البطارية</option>
                   </select>
                 </div>
-
-                {/* إضافة حقول إضافية بناءً على الخدمة المختارة */}
                 {selectedCarService === "Oil Change" && (
-                  <div className="form-group">
-                    <label>اختر نوع الزيت</label>
-                    <select className="custom-select" required>
+                  <div className="relative">
+                    <label className="block mb-1 text-gray-700 text-xl">اختر نوع الزيت</label>
+                    <select className="w-full p-3 border border-gray-300 rounded" required>
                       <option value="">اختر نوع الزيت</option>
-                      <option value="Full Synthetic"> زيت تخليقي (60$)  </option>
-                      <option value="Semi Synthetic"> زيت نصف تخليقي(45$)  </option>
-                      <option value="Mineral">  زيت صناعي(35$)</option>
+                      <option value="Full Synthetic">زيت تخليقي بالكامل (150$)</option>
+                      <option value="Semi Synthetic">زيت شبه تخليقي (140$)</option>
+                      <option value="Mineral">زيت صناعي (130$)</option>
                     </select>
                   </div>
                 )}
-
                 {selectedCarService === "Car Washing" && (
-                  <div className="form-group">
-                    <label>اختر نوع الغسيل</label>
-                    <select className="custom-select" required>
+                  <div className="relative">
+                    <label className="block mb-1 text-gray-700 text-xl">اختر نوع الغسيل</label>
+                    <select className="w-full p-3 border border-gray-300 rounded" required>
                       <option value="">اختر نوع الغسيل</option>
-                      <option value="Interior">  غسيل داخلي(20$)</option>
-                      <option value="Exterior"> غسيل خارجي(15$)</option>
-                      <option value="Full"> غسيل شامل(30$)</option>
+                      <option value="Interior">غسيل داخلي (50$)</option>
+                      <option value="Exterior">غسيل خارجي (40$)</option>
+                      <option value="Full">غسيل شامل (70$)</option>
                     </select>
                   </div>
                 )}
-
-  {selectedCarService === "Tire Maintenance" && (
-  <>
-    <div className="form-group">
-      <label>اختر الإطار </label>
-      <select className="custom-select" required>
-        <option value="">  الأطارات الصيفية</option>
-        <option value="summer1">Michelin Pilot Sport 4 (220$)</option>
-        <option value="summer2">Bridgestone Potenza RE-71R (250$)</option>
-        <option value="summer3">Continental ExtremeContact Sport (230$)</option>
-        <option value="">  الأطارات الشتوية</option>
-        <option value="winter1">Michelin X-Ice Snow (150$)</option>
-        <option value="winter2">Bridgestone Blizzak WS90 (160$)</option>
-        <option value="winter3">Continental VikingContact 7 (170$)</option>
-      </select>
-    </div>
-
-
-   
-  </>
-)}
-                   {selectedCarService === "Battery Replacement" && (
-                  <div className="form-group">
-                    <label>اختر خدمة البطارية</label>
-                    <select className="custom-select" required>
-                      <option value="">اختر خدمة البطارية</option>
-                      <option value="Battery Testing">اختبار البطارية (80$)</option>
-                      <option value="Battery Replacement">استبدال البطارية (150$)</option>
-                      <option value="Battery Charging">شحن البطارية (60$)</option>
-                 
-                    </select>
-                  </div>
-                )}
-
-              {selectedCarService === "Engine Maintenance" && (
-                  <div className="form-group">
-                    <label>اختر خدمة المحرك</label>
-                    <select className="custom-select" required>
-                      <option value=""> صيانة الاجزاء التالية.. </option>
-                      <option value="Spark Plugs">استبدال شمعات الإشعال (200$)</option>
-                      <option value="Fuel Injector Cleaning">تنظيف بخاخات الوقود (180$)</option>
-                      <option value="Timing Belt Replacement">استبدال سير التوقيت (250$)</option>
-                      <option value="Timing Belt Replacement">  جميع الخيارات  (500$)</option>
-
-                    </select>
-                  </div>
-                )}
-
-
-                  {selectedCarService === "Electrical System Repair" && (
-                  <div className="form-group">
-                    <label>اختر خدمة أنظمة الكهرباء</label>
-                    <select className="custom-select" required>
-                      <option value="">اختر الأجزاء المطلوب صيانتها  </option>
+                {selectedCarService === "Electrical System Repair" && (
+                  <div className="relative">
+                    <label className="block mb-1 text-gray-700 text-xl">اختر خدمة أنظمة الكهرباء</label>
+                    <select className="w-full p-3 border border-gray-300 rounded" required>
+                      <option value="">اختر الخدمة</option>
                       <option value="Alternator Repair">إصلاح المولد (120$)</option>
                       <option value="Starter Motor Repair">إصلاح موتور التشغيل (130$)</option>
                       <option value="Wiring Diagnosis">تشخيص الأسلاك (100$)</option>
-                      <option value="Timing Belt Replacement">  جميع الخيارات  (320$)</option>
-
+                      <option value="All Options">جميع الخيارات (320$)</option>
                     </select>
                   </div>
                 )}
-
+                {selectedCarService === "Engine Maintenance" && (
+                  <div className="relative">
+                    <label className="block mb-1 text-gray-700 text-xl">اختر خدمة المحرك</label>
+                    <select className="w-full p-3 border border-gray-300 rounded" required>
+                      <option value="">اختر الخدمة</option>
+                      <option value="Spark Plugs">استبدال شمعات الإشعال (200$)</option>
+                      <option value="Fuel Injector Cleaning">تنظيف بخاخات الوقود (180$)</option>
+                      <option value="Timing Belt Replacement">استبدال سير التوقيت (250$)</option>
+                      <option value="All Options">جميع الخيارات (500$)</option>
+                    </select>
+                  </div>
+                )}
+                {selectedCarService === "Battery Replacement" && (
+                  <div className="relative">
+                    <label className="block mb-1 text-gray-700 text-xl">اختر خدمة البطارية</label>
+                    <select className="w-full p-3 border border-gray-300 rounded" required>
+                      <option value="">اختر الخدمة</option>
+                      <option value="Battery Testing">اختبار البطارية (80$)</option>
+                      <option value="Battery Replacement">استبدال البطارية (150$)</option>
+                      <option value="Battery Charging">شحن البطارية (60$)</option>
+                    </select>
+                  </div>
+                )}
+                {selectedCarService === "Piston Change" && (
+                  <div className="relative">
+                    <label className="block mb-1 text-gray-700 text-xl">اختر نوع الخدمة لبستم المحرك</label>
+                    <select className="w-full p-3 border border-gray-300 rounded" required>
+                      <option value="">اختر الخدمة</option>
+                      <option value="Basic Piston Service">خدمة أساسية (50$)</option>
+                      <option value="Advanced Piston Service">خدمة متقدمة (70$)</option>
+                    </select>
+                  </div>
+                )}
               </div>
-
-              <div className="form-footer">
-                <p>
-                  بالضغط على " أرسال المعلومات و تأكيد الحجز"، أؤكد صحة
-                  المعلومات وأوافق على اتصال فريق الدعم لتأكيد الحجز.
+              <div className="mt-6 flex flex-col items-center w-full relative text-right gap-4">
+                <p className="mb-8 text-gray-600 text-xl font-medium">
+                  بالضغط على "إرسال المعلومات وتأكيد الحجز"، أؤكد صحة المعلومات وأوافق على اتصال فريق الدعم لتأكيد الحجز.
                 </p>
-                <div className="checkbox-container">
+                <div className="relative flex items-center gap-2 w-full justify-end">
                   <input
                     type="checkbox"
                     id="confirmation-checkbox"
                     onChange={handleCheckboxChange}
                     checked={isChecked}
+                    className="w-5 h-5"
                   />
-                  <label htmlFor="confirmation-checkbox">أوافق على الشروط</label>
+                  <label htmlFor="confirmation-checkbox" className="text-xl">
+                    أوافق على الشروط
+                  </label>
                 </div>
-
                 {showError && (
-                  <p className="error-message">
+                  <p className="absolute text-red-500 text-lg top-1/2 right-1">
                     يرجى النقر على المربع قبل تأكيد الحجز.
                   </p>
                 )}
-                <div className="btn-Y">
-                  <button type="submit" className="btn2">
+                <div className="flex flex-col items-center gap-4 mt-4 w-full">
+                  <button type="submit" className="w-1/2 bg-blue-600 text-white p-3 rounded hover:bg-blue-700 transition text-base">
                     إرسال المعلومات وتأكيد الحجز
                   </button>
-                  <button type="button" className="btn2" onClick={handleBack}>
+                  <button type="button" className="w-1/2 bg-gray-300 text-white p-3 rounded hover:bg-gray-400 transition text-base" onClick={handleBack}>
                     رجوع
                   </button>
-                  <div className="closeBtn">
-                    <button
-                      type="button"
-                      className="btn3"
-                      onClick={onCloseForm}
-                    >
-                      إغلاق
-                    </button>
-                  </div>
+                  <button type="button" className="w-1/2 bg-red-600 text-white p-3 rounded hover:bg-red-700 transition text-base" onClick={onCloseForm}>
+                    إغلاق
+                  </button>
                 </div>
               </div>
             </form>

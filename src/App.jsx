@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
-// مكونات الفرونت
+// مكونات الواجهة الأمامية
 import Header from './componts/Header.jsx';
 import FQA from './componts/FQA.jsx';
 import Home from './componts/Home.jsx';
@@ -17,77 +17,82 @@ import AdminLogin from './componts/Admin/AdminLogin.jsx';
 import AdminDashboard from './componts/Admin/AdminDashboard.jsx';
 
 function App() {
+  // حالة تحميل الصفحة
   const [isLoaded, setIsLoaded] = useState(false);
-  const [showForm, setShowForm] = useState(false); // التحكم بعرض الفورم 
-  const [selectedService, setSelectedService] = useState(""); // حفظ نوع الخدمة المختارة
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // تحديد حالة تسجيل الدخول
+  // للتحكم بعرض الفورم الخاص بالخدمة
+  const [showForm, setShowForm] = useState(false);
+  // حفظ نوع الخدمة المختارة من قسم الخدمات
+  const [selectedService, setSelectedService] = useState("");
+  // حالة تسجيل الدخول للمستخدم (العميل)
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // تخزين بيانات المستخدم مثل الاسم
+  const [user, setUser] = useState({ username: "" });
 
   useEffect(() => {
-    // تعيين حالة التحميل بعد تحميل الصفحة
-    const timer = setTimeout(() => setIsLoaded(true), 100); // تأخير بسيط
-    return () => clearTimeout(timer); // تنظيف المؤقت
+    // تعيين حالة التحميل بعد تأخير بسيط
+    const timer = setTimeout(() => setIsLoaded(true), 100);
+    return () => clearTimeout(timer);
   }, []);
 
-  // دالة لإظهار الفورم عند اختيار خدمة
+  // دالة لإظهار الفورم عند اختيار خدمة من قسم الخدمات
   const handleShowForm = (service) => {
     setSelectedService(service);
     setShowForm(true);
   };
 
-  // دالة لإخفاء الفورم والعودة للصفحة الرئيسية
+  // دالة لإخفاء الفورم والعودة للواجهة الرئيسية
   const handleCloseForm = () => {
     setShowForm(false);
     setSelectedService("");
   };
 
-  // دالة لتسجيل الدخول
-  const handleLogin = useCallback(() => {
+  // دالة لتسجيل الدخول (مثلاً بعد إدخال بيانات العميل في فورم التسجيل)
+  const handleLogin = useCallback((username) => {
     setIsAuthenticated(true);
+    setUser({ username });
   }, []);
+
+  // دالة لتسجيل الخروج
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setUser({ username: "" });
+  };
 
   return (
     <Router>
       <Routes>
-        {/* صفحات المستخدم العادي */}
+        {/* صفحة الواجهة الرئيسية للمستخدم */}
         <Route
           path="/"
           element={
             <>
-              {!showForm && (
+              <Header
+                isAuthenticated={isAuthenticated}
+                user={user}
+                onLoginClick={() => setShowForm(true)}
+                onLogout={handleLogout}
+              />
+              {!showForm ? (
                 <>
-                  <div className={`fade-in ${isLoaded ? 'loaded' : ''}`}>
-                    <Header />
-                  </div>
-
-                  <div className={`fade-in ${isLoaded ? 'loaded' : ''}`}>
-                    <Home />
-                  </div>
-
-                  <div className={`fade-in ${isLoaded ? 'loaded' : ''} FqaHome2`}>
-                    <Home2 />
-                    <FQA />
-                  </div>
-
-                  <div className={`fade-in ${isLoaded ? 'loaded' : ''}`}>
-                    <ServicesContent onServiceClick={handleShowForm} />
-                  </div>
-
-                  <div className={`fade-in ${isLoaded ? 'loaded' : ''}`}>
-                    <AboutUs />
-                  </div>
-
-                  <div className={`fade-in ${isLoaded ? 'loaded' : ''} AApp`}>
-                    <Footer />
-                  </div>
+                  <Home />
+                  <ServicesContent onServiceClick={handleShowForm} />
+                  <AboutUs />
+                  <Footer />
                 </>
+              ) : (
+                // تمرير onLogin لتحديث حالة المستخدم عند التسجيل/تسجيل الدخول
+                <Form
+                  onCloseForm={handleCloseForm}
+                  selectedService={selectedService}
+                  isAuthenticated={isAuthenticated}
+                  onLogin={handleLogin}
+                />
               )}
-
-              {showForm && <Form onCloseForm={handleCloseForm} selectedService={selectedService} />}
             </>
           }
         />
 
-        {/* صفحات الأدمن */}
+        {/* مسارات الأدمن */}
         <Route
           path="/admin/login"
           element={<AdminLogin onLogin={handleLogin} />}

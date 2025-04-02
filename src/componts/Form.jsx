@@ -267,7 +267,7 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
                     onChange={handleCheckboxChange}
                     checked={isChecked}
                     className="w-5 h-5"
-                  />
+                  /> 
                   <label htmlFor="confirmation-checkbox" className="text-xl">
                     أوافق على الشروط
                   </label>
@@ -293,7 +293,7 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
                   </button>
                 </div>
               </div>
-            </form>
+            </form> //sdasdsdasd
           )}
         </>
       ) : (

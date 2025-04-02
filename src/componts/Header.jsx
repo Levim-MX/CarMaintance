@@ -60,7 +60,8 @@ const Header = ({ isAuthenticated, user, onLoginClick, onLogout }) => {
             </button>
             <button 
               className="mt-2 sm:mt-0 px-3 py-2 bg-green-600 text-white text-base sm:text-lg font-semibold rounded transition-all duration-300 hover:bg-green-700 hover:scale-105"
-              onClick={() => navigate('/register')}
+              onClick={onLoginClick}
+
             >
               Register
             </button>

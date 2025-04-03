@@ -76,6 +76,8 @@ function App() {
               {!showForm ? (
                 <>
                   <Home />
+                  <Home2/>
+                  <FQA/>
                   <ServicesContent onServiceClick={handleShowForm} />
                   <AboutUs />
                   <Footer />

@@ -1,96 +1,87 @@
-import React, { useState } from 'react';
-import './FQA.css'
-import '../App.css'
-
+import React, { useState } from "react";
 
 function FQA() {
-  const [activeIndex, setActiveIndex] = useState(null); // State to manage the active answer
+  const [activeIndex, setActiveIndex] = useState(null);
 
   const toggleAnswer = (index) => {
-    // If the clicked index is the same as the activeIndex, close it; otherwise, set it as the active index
     setActiveIndex(activeIndex === index ? null : index);
   };
 
   return (
-    <section id="section-faq" className="section-faq">
-      <h1>الأسئلة الشائعة</h1>
-      <ul>
-        <li>
-          <div className="question" onClick={() => toggleAnswer(0)}>
-            <span>ما هو العمر الافتراضي لأطارات العجلة؟</span>
-            <span className="icon">
-              <ion-icon name="add-outline" style={{ transform: activeIndex === 0 ? 'rotate(135deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}></ion-icon>
-            </span>
-          </div>
-          <div className="answer" style={{ display: activeIndex === 0 ? 'block' : 'none' }}>
-            <p>            لتجنب انفجار أطار العجلة ننصح بتبديل الدوري كل 50 ألف كيلو متر أو عند ظهور علامات التأكل على الأطار </p>
-          </div>
-        </li>
-        
-        <li>
-          <div className="question" onClick={() => toggleAnswer(1)}>
-            <span>ما هي اقصى فترة لتبديل زيت السيارة ؟</span>
-            <span className="icon">
-              <ion-icon name="add-outline" style={{ transform: activeIndex === 1 ? 'rotate(135deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}></ion-icon>
-            </span>
-          </div>
-          <div className="answer" style={{ display: activeIndex === 1 ? 'block' : 'none' }}>
-            <span>
-              <h2>يعتمد على نوعية الزيت</h2>
-              <ul>
-                <li>
-                  <p>الزيوت التقليدية كل 5000 كيلومتر</p>
-                </li>
-                <li>
-                  <p>الزيوت النصف تخليقية كل 7000-10000 كيلومتر أي كل 6 أشهر</p>
-                </li>
-                <li>
-                  <p>الزيوت التخليقية الكاملة تدوم حتى 10000-15000 كيلومتر أي كل 8 أشهر أو سنة</p>
-                </li>
-              </ul>
-            </span>
-          </div>
-        </li>
-
-        <li>
-          <div className="question" onClick={() => toggleAnswer(2)}>
-            <span>ما هي علامات الحاجة إلى تغيير بطارية السيارة؟</span>
-            <span className="icon">
-              <ion-icon name="add-outline" style={{ transform: activeIndex === 2 ? 'rotate(135deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}></ion-icon>
-            </span>
-          </div>
-          <div className="answer" style={{ display: activeIndex === 2 ? 'block' : 'none' }}>
-          <p> من العلامات الشائعة ضعف في تشغيل المحرك، انخفاض سطوع الأضواء، وظهور إشارة البطارية في لوحة القيادة. </p>
- 
-          </div>
-        </li>
-
-        <li>
-          <div className="question" onClick={() => toggleAnswer(3)}>
-            <span>كم مرة يجب فحص ضغط الإطارات؟</span>
-            <span className="icon">
-              <ion-icon name="add-outline" style={{ transform: activeIndex === 3 ? 'rotate(135deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}></ion-icon>
-            </span>
-          </div>
-          <div className="answer" style={{ display: activeIndex === 3 ? 'block' : 'none' }}>
-            <p>ننصح بفحص ضغط الإطارات مرة كل شهر على الأقل للحفاظ على الأداء الأمثل</p>
-          </div>
-        </li>
-
-        <li>
-          <div className="question" onClick={() => toggleAnswer(4)}>
-            <span>ما هي الخدمات التي توفروها؟</span>
-            <span className="icon">
-              <ion-icon name="add-outline" style={{ transform: activeIndex === 4 ? 'rotate(135deg)' : 'rotate(0deg)', transition: 'transform 0.3s ease' }}></ion-icon>
-            </span>
-          </div>
-          <div className="answer" style={{ display: activeIndex === 4 ? 'block' : 'none' }}>
-            <p>            نقدم خدمات شاملة تشمل تصليح المحركات، صيانة الإطارات، تغيير الزيوت، صيانة المكابح، فحص إلكتروني شامل، بالإضافة إلى خدمات التكييف والبطاريات </p>
-          </div>
-        </li>
+    <section
+      className="
+        absolute top-[150%] right-[3%] w-80 max-w-sm bg-blue-100 p-5 rounded-2xl shadow-lg text-gray-800 font-roboto max-h-[90vh]
+        sm:top-[140%] sm:right-[2%]
+        md:top-[130%] md:right-0
+        lg:top-[120%] lg:right-[5%]
+        xl:top-[110%] xl:right-[8%]
+        2xl:top-[150%] 2xl:right-[5%]
+      "
+    >
+      <h1 className="text-center text-blue-500 text-2xl font-bold mb-5">
+        الأسئلة الشائعة
+      </h1>
+      <ul className="space-y-4">
+        {faqData.map((faq, index) => (
+          <li key={index} className="bg-white p-4 rounded-md shadow-md">
+            <div
+              className="flex justify-between items-center font-bold text-gray-800 cursor-pointer hover:text-blue-500"
+              onClick={() => toggleAnswer(index)}
+            >
+              <span>{faq.question}</span>
+              <span
+                className="text-xl transition-transform duration-300"
+                style={{
+                  transform: activeIndex === index ? "rotate(135deg)" : "rotate(0deg)",
+                }}
+              >
+                +
+              </span>
+            </div>
+            {activeIndex === index && (
+              <div className="mt-2 text-gray-600 text-sm">{faq.answer}</div>
+            )}
+          </li>
+        ))}
       </ul>
     </section>
   );
 }
+
+const faqData = [
+  {
+    question: "ما هو العمر الافتراضي لإطارات العجلة؟",
+    answer:
+      "لتجنب انفجار إطار العجلة، ننصح بالتبديل الدوري كل 50 ألف كيلومتر أو عند ظهور علامات التآكل على الإطار.",
+  },
+  {
+    question: "ما هي أقصى فترة لتبديل زيت السيارة؟",
+    answer: (
+      <div>
+        <h2 className="font-bold">يعتمد على نوعية الزيت:</h2>
+        <ul className="list-disc pl-5 mt-2">
+          <li>الزيوت التقليدية: كل 5000 كيلومتر</li>
+          <li>الزيوت النصف تخليقية: كل 7000-10000 كيلومتر</li>
+          <li>الزيوت التخليقية الكاملة: حتى 10000-15000 كيلومتر</li>
+        </ul>
+      </div>
+    ),
+  },
+  {
+    question: "ما هي علامات الحاجة إلى تغيير بطارية السيارة؟",
+    answer:
+      "ضعف تشغيل المحرك، انخفاض سطوع الأضواء، وظهور إشارة البطارية في لوحة القيادة.",
+  },
+  {
+    question: "كم مرة يجب فحص ضغط الإطارات؟",
+    answer:
+      "ننصح بفحص ضغط الإطارات مرة كل شهر على الأقل للحفاظ على الأداء الأمثل.",
+  },
+  {
+    question: "ما هي الخدمات التي توفرونها؟",
+    answer:
+      "نقدم خدمات تشمل تصليح المحركات، صيانة الإطارات، تغيير الزيوت، فحص إلكتروني شامل، وصيانة المكابح والتكييف والبطاريات.",
+  },
+];
 
 export default FQA;

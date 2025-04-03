@@ -534,6 +534,48 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
                 </select>
               </div>
             )}
+            {selectedCarService === "Tire Maintenance" && (
+              <div className="relative">
+                <label className="block mb-1 text-gray-700 text-xl">اختر نوع الأطارات</label>
+                 <select
+                  className="w-full p-3 border border-gray-300 rounded"
+                  required
+                  value={subService}
+                  onChange={(e) => setSubService(e.target.value)}
+                > 
+                  <option value=""> :الإطارات الصيفية </option>
+                  <option value="summer1"> (50$)بريجستون بوتنزا RE-71RS </option>
+                  <option value="summer2">فايرستون إندي   (40$)</option>
+                  <option value="summer3">   (70$)ميشلان بايلوت سبورتS</option>
+
+                  <option value=""> :الإطارات الشتوية </option>
+                  <option value="winnter1"> بيريلي سكوربيون وينتر (50$)</option>
+                  <option value="winnter2">  نيوكين هاكابليتا  (40$)</option>
+                  <option value="winnter3">  ميشلان بايلوت ألبين (70$)</option>
+                </select>
+              </div>
+            )}
+                 
+                 {selectedCarService === "Brake Maintenance" && (
+              <div className="relative">
+                <label className="block mb-1 text-gray-700 text-xl">حدد نوع الخدمة   </label>
+                 <select
+                  className="w-full p-3 border border-gray-300 rounded"
+                  required
+                  value={subService}
+                  onChange={(e) => setSubService(e.target.value)}
+                > 
+                  <option value="">اختار خدمة فرعية</option>
+                  <option value="Brake Pads">Brake Pads  (20$)</option>
+                  <option value="Brake Rotors/Discs">Brake Rotors/Discs  (40$)</option>
+                  <option value="Brake Fluid Flush">Brake Fluid Flush  (50$)</option>
+                  <option value="ABS">  فحص وإصلاح نظام ABS  (20$)</option>
+                  <option value="all">جميع الخيارات  (130$)</option>
+
+                </select>
+              </div>
+            )}
+
             {selectedCarService === "Electrical System Repair" && (
               <div className="relative">
                 <label className="block mb-1 text-gray-700 text-xl">اختر خدمة أنظمة الكهرباء</label>
@@ -623,7 +665,7 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
               </p>
             )}
             <div className="flex flex-col items-center gap-4 mt-4 w-full">
-              <button type="submit" className="w-1/2 bg-blue-600 text-white p-3 rounded hover:bg-blue-700 transition text-base">
+              <button type="submit"  className="w-1/2 bg-blue-600 text-white p-3 rounded hover:bg-blue-700 transition text-base">
                 إرسال المعلومات وتأكيد الحجز
               </button>
               <button type="button" className="w-1/2 bg-red-600 text-white p-3 rounded hover:bg-red-700 transition text-base" onClick={onCloseForm}>

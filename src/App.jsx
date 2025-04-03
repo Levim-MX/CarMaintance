@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import 'animate.css';
 
 // مكونات الواجهة الأمامية
 import Header from './componts/Header.jsx';

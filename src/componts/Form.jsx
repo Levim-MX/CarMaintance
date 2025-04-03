@@ -4,6 +4,7 @@ import "react-phone-input-2/lib/style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faUser } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
   // تخزين نوع الخدمة المختارة من قسم الخدمات
@@ -41,6 +42,12 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
       setCurrentStep(1);
     }
   }, [isAuthenticated]);
+
+  // حالات معلومات المركبة
+  const [carType, setCarType] = useState("");
+  const [branchName, setBranchName] = useState("");
+  // حالة الخدمة الفرعية (على سبيل المثال Oil Change)
+  const [subService, setSubService] = useState("");
 
   // دالة التحقق من رقم الهاتف (حسب الصيغة العراقية)
   const validatePhoneNumber = (phoneNumber) => {
@@ -86,15 +93,61 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
         localStorage.setItem("token", token);
         onLogin(userName);
         onCloseForm();
+        Swal.fire({
+          title: " تم التسجيل!",
+          icon: "success",
+          confirmButtonText: "حسنًا",
+          confirmButtonColor: "#28a745",
+  
+          timer: 2000, // تقليل مدة الإغلاق التلقائي ليكون أسرع
+          width: "300px", // تصغير عرض التنبيه
+          
+          
+          padding: "0.8rem", // تقليل التباعد الداخلي
+          customClass: {
+            popup: "custom-swal-popup", // كلاس مخصص سنضيفه في Tailwind
+            title: "text-lg font-semibold",
+            confirmButton: "px-4 py-2 text-sm"
+        },
+          customClass: {
+              title: "swal-small-title",
+              popup: "swal-small-popup",
+              confirmButton: "swal-small-button"
+          },
+          showClass: {
+              popup: 'animate__animated animate__fadeInDown'
+          },
+          hideClass: {
+              popup: 'animate__animated animate__fadeOutUp'
+          }
+      });
       } else {
         alert("حدث خطأ غير متوقع أثناء التسجيل. الرجاء المحاولة لاحقًا.");
       }
     } catch (error) {
       console.error("Error during registration:", error);
       if (error.response && error.response.data) {
-        alert(error.response.data.msg || "حدث خطأ أثناء التسجيل.");
+        Swal.fire({
+ 
+          text: "  لا يمكن استخدام ملعومات مسجلة مسبقا ",
+          icon: "error",
+          confirmButtonText: "حسناً",
+          confirmButtonColor: "#d33",  // لون أحمر لتحذير المستخدم
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          showCloseButton: true,
+        }); 
       } else {
-        alert("تعذر الاتصال بالخادم. الرجاء المحاولة لاحقًا.");
+          Swal.fire({
+ 
+          text: "تعذر الاتصال بالخادم. الرجاء المحاولة لاحقًا.",
+          icon: "error",
+          confirmButtonText: "حسناً",
+          confirmButtonColor: "#d33",  // لون أحمر لتحذير المستخدم
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          showCloseButton: true,
+        }); 
       }
     }
   };
@@ -111,39 +164,127 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
       const token = res.data.token;
       console.log("Token from server:", token);
       localStorage.setItem("token", token);
-  
+
       // استخدام التوكن لاستدعاء API وجلب بيانات المستخدم (GET)
       const userRes = await axios.get("http://localhost:3000/api/users/", {
-        headers: { "x-auth-token": token }
+        headers: { "x-auth-token": token },
       });
-      
       console.log("User data:", userRes.data);
-  
-      // تحديث حالة المستخدم في الواجهة (يمكنك استخدام خاصية اسم المستخدم من بيانات userRes.data)
+
+      // تحديث حالة المستخدم في الواجهة
       onLogin(userRes.data.name || userRes.data.username);
+
       onCloseForm();
-  
+      Swal.fire({
+        title: " تم التسجيل!",
+        icon: "success",
+        confirmButtonText: "حسنًا",
+        confirmButtonColor: "#28a745",
+
+        timer: 2000, // تقليل مدة الإغلاق التلقائي ليكون أسرع
+        width: "300px", // تصغير عرض التنبيه
+        
+        
+        padding: "0.8rem", // تقليل التباعد الداخلي
+        customClass: {
+          popup: "custom-swal-popup", // كلاس مخصص سنضيفه في Tailwind
+          title: "text-lg font-semibold",
+          confirmButton: "px-4 py-2 text-sm"
+      },
+        customClass: {
+            title: "swal-small-title",
+            popup: "swal-small-popup",
+            confirmButton: "swal-small-button"
+        },
+        showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+        }
+    });
+    
     } catch (error) {
       if (error.response) {
         console.error(error.response.data);
-        alert(error.response.data.msg || "Login error");
+        Swal.fire({
+          title: "خطأ في تسجيل الدخول ❌",
+          text: "المعلومات المدخلة غير صحيحة. يرجى التحقق من رقم الجوال  أو كلمة المرور والمحاولة مرة أخرى.",
+          icon: "error",
+          confirmButtonText: "حسناً",
+          confirmButtonColor: "#d33",  // لون أحمر لتحذير المستخدم
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          showCloseButton: true,
+        });
       } else {
         console.error(error);
         alert("Login error");
       }
     }
   };
-  
 
   // دالة إرسال بيانات حجز المركبة (للمستخدم المسجّل)
   const handleBookingSubmit = async (e) => {
-
     e.preventDefault();
-    console.log("Submitting registration form...", { userName, phoneNumber, userPass });
+    // التحقق من ملء الحقول المطلوبة
+    if (!carType || !branchName || !selectedCarService) {
+      alert("يرجى ملء جميع الحقول المطلوبة.");
+      return;
+    }
+    // في حالة الخدمات التي تتطلب خدمة فرعية (مثل Oil Change)
+    if (selectedCarService === "Oil Change" && !subService) {
+      alert("يرجى اختيار نوع الزيت.");
+      return;
+    }
+    try {
+      // الحصول على التوكن من localStorage
+      const token = localStorage.getItem("token");
+      const res = await axios.post(
+        "http://localhost:3000/api/order",
+        {
+          car_name: carType,
+          branch_name: branchName,
+          service_name: selectedCarService,
 
-    console.log("Booking branch for user:", { selectedCarService });
-    alert("تم تأكيد الحجز بنجاح!");
-    onCloseForm();
+         selected_sub_service: subService,         // قيمة الخدمة الفرعية
+
+         confirmed: true,
+        },
+        {
+          headers: { "x-auth-token": token },
+        }
+      );
+      console.log("Order created successfully:", res.data);
+      Swal.fire({
+        title: " تم تأكيد الحجز ✅",
+        text: "تم حجز الخدمة بنجاح! سيقوم فريق العمل بالتواصل معك قريبًا لتأكيد موعد الحجز والتفاصيل الأخرى. شكرًا لاختيارك خدمتنا! 🚗",
+        icon: "success",
+        confirmButtonText: "حسناً",
+        allowOutsideClick: false,  // يمنع الإغلاق عند النقر خارج النافذة
+        allowEscapeKey: false,     // يمنع الإغلاق عند الضغط على ESC
+        showCloseButton: true,     // يُظهر زر الإغلاق (X)
+        confirmButtonColor: "#28a745",
+      });
+      
+      onCloseForm();
+    } catch (error) {
+      console.error("Error creating order:", error);
+      if (error.response && error.response.data) {
+        alert(error.response.data.msg || "حدث خطأ أثناء إنشاء الطلب.");
+      } else {
+        Swal.fire({
+ 
+          text: "تعذر الاتصال بالخادم. الرجاء المحاولة لاحقًا.",
+          icon: "error",
+          confirmButtonText: "حسناً",
+          confirmButtonColor: "#d33",  // لون أحمر لتحذير المستخدم
+          allowOutsideClick: false,
+          allowEscapeKey: false,
+          showCloseButton: true,
+        });        
+      }
+    }
   };
 
   // دالة تغيير حالة checkbox
@@ -155,7 +296,6 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
       {!isAuthenticated ? (
-        // إذا لم يكن المستخدم مسجّل، عرض فورم التسجيل/تسجيل الدخول
         <>
           {isReturningUser ? (
             // فورم تسجيل الدخول
@@ -193,12 +333,12 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
                 </div>
               </div>
               <div className="mt-6 flex flex-col items-center">
-                <button type="submit" className="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700">
+                <button type="submit" className="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700 animate__animated animate__slideInLeft">
                   تسجيل الدخول
                 </button>
                 <button
                   type="button"
-                  className="mt-4 w-full bg-gray-300 text-gray-800 p-3 rounded hover:bg-gray-400"
+                  className="mt-4 w-full bg-gray-300 text-gray-800 p-3 rounded hover:bg-gray-400 animate__animated animate__slideInLeft"
                   onClick={() => setIsReturningUser(false)}
                 >
                   العودة للتسجيل
@@ -267,7 +407,7 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
                     onChange={handleCheckboxChange}
                     checked={isChecked}
                     className="w-5 h-5"
-                  /> 
+                  />
                   <label htmlFor="confirmation-checkbox" className="text-xl">
                     أوافق على الشروط
                   </label>
@@ -293,7 +433,7 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
                   </button>
                 </div>
               </div>
-            </form> //sdasdsdasd
+            </form>
           )}
         </>
       ) : (
@@ -304,18 +444,41 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
           </div>
           <div className="space-y-4">
             <div className="relative">
-              <select id="carType" className="w-full p-3 border border-gray-300 rounded" required>
+              <select
+                id="carType"
+                className="w-full p-3 border border-gray-300 rounded"
+                required
+                value={carType}
+                onChange={(e) => setCarType(e.target.value)}
+              >
                 <option value="">اختر نوع المركبة</option>
                 <option value="AUDI A3">أودي A3</option>
                 <option value="AUDI A4">AUDI A4</option>
                 <option value="AUDI A6">AUDI A6</option>
                 <option value="AUDI A8">AUDI A8</option>
                 <option value="AUDI Q3">أودي Q3</option>
-                <option value="AUDI Q5">أودي Q5</option>
-                <option value="AUDI Q7">أودي Q7</option>
-                <option value="AUDI Q8">أودي Q8</option>
+                <option value="AUDI Q5">AUDI Q5</option>
+                <option value="AUDI Q7">AUDI Q7</option>
+                <option value="AUDI Q8">AUDI Q8</option>
                 <option value="AUDI TT">أودي TT</option>
-                <option value="AUDI R8">أودي R8</option>
+                <option value="AUDI R8">AUDI R8</option>
+              </select>
+            </div>
+            <div className="relative">
+              <select
+                id="branch_name"
+                className="w-full p-3 border border-gray-300 rounded"
+                required
+                value={branchName}
+                onChange={(e) => setBranchName(e.target.value)}
+              >
+                <option value="">اختر اقرب فرع اليك</option>
+                <option value="فرع الكرادة">فرع الكرادة</option>
+                <option value="فرع الأعظمية">فرع الأعظمية</option>
+                <option value="فرع المنصور">فرع المنصور</option>
+                <option value="فرع شارع فلسطين">فرع شارع فلسطين</option>
+                <option value="الكاظمية">الكاظمية</option>
+                <option value="حي القاهرة">حي القاهرة</option>
               </select>
             </div>
             <div className="relative">
@@ -337,21 +500,33 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
                 <option value="Battery Replacement">فحص وتبديل البطارية</option>
               </select>
             </div>
+            {/* إضافة حقل الخدمة الفرعية في حالة Oil Change */}
             {selectedCarService === "Oil Change" && (
               <div className="relative">
                 <label className="block mb-1 text-gray-700 text-xl">اختر نوع الزيت</label>
-                <select className="w-full p-3 border border-gray-300 rounded" required>
+                <select
+                  className="w-full p-3 border border-gray-300 rounded"
+                  required
+                  value={subService}
+                  onChange={(e) => setSubService(e.target.value)}
+                >
                   <option value="">اختر نوع الزيت</option>
                   <option value="Full Synthetic">زيت تخليقي بالكامل (150$)</option>
-                  <option value="Semi Synthetic">زيت شبه تخليقي (140$)</option>
+                  <option value="Semi Synthetic 140$">زيت شبه تخليقي (140$)</option>
                   <option value="Mineral">زيت صناعي (130$)</option>
                 </select>
               </div>
             )}
-            {selectedCarService === "Car Washing" && (
+
+           {selectedCarService === "Car Washing" && (
               <div className="relative">
                 <label className="block mb-1 text-gray-700 text-xl">اختر نوع الغسيل</label>
-                <select className="w-full p-3 border border-gray-300 rounded" required>
+                 <select
+                  className="w-full p-3 border border-gray-300 rounded"
+                  required
+                  value={subService}
+                  onChange={(e) => setSubService(e.target.value)}
+                > 
                   <option value="">اختر نوع الغسيل</option>
                   <option value="Interior">غسيل داخلي (50$)</option>
                   <option value="Exterior">غسيل خارجي (40$)</option>
@@ -362,7 +537,12 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
             {selectedCarService === "Electrical System Repair" && (
               <div className="relative">
                 <label className="block mb-1 text-gray-700 text-xl">اختر خدمة أنظمة الكهرباء</label>
-                <select className="w-full p-3 border border-gray-300 rounded" required>
+                 <select
+                  className="w-full p-3 border border-gray-300 rounded"
+                  required
+                  value={subService}
+                  onChange={(e) => setSubService(e.target.value)}
+                > 
                   <option value="">اختر الخدمة</option>
                   <option value="Alternator Repair">إصلاح المولد (120$)</option>
                   <option value="Starter Motor Repair">إصلاح موتور التشغيل (130$)</option>
@@ -374,7 +554,12 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
             {selectedCarService === "Engine Maintenance" && (
               <div className="relative">
                 <label className="block mb-1 text-gray-700 text-xl">اختر خدمة المحرك</label>
-                <select className="w-full p-3 border border-gray-300 rounded" required>
+                 <select
+                  className="w-full p-3 border border-gray-300 rounded"
+                  required
+                  value={subService}
+                  onChange={(e) => setSubService(e.target.value)}
+                > 
                   <option value="">اختر الخدمة</option>
                   <option value="Spark Plugs">استبدال شمعات الإشعال (200$)</option>
                   <option value="Fuel Injector Cleaning">تنظيف بخاخات الوقود (180$)</option>
@@ -386,7 +571,12 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
             {selectedCarService === "Battery Replacement" && (
               <div className="relative">
                 <label className="block mb-1 text-gray-700 text-xl">اختر خدمة البطارية</label>
-                <select className="w-full p-3 border border-gray-300 rounded" required>
+                 <select
+                  className="w-full p-3 border border-gray-300 rounded"
+                  required
+                  value={subService}
+                  onChange={(e) => setSubService(e.target.value)}
+                > 
                   <option value="">اختر الخدمة</option>
                   <option value="Battery Testing">اختبار البطارية (80$)</option>
                   <option value="Battery Replacement">استبدال البطارية (150$)</option>
@@ -397,13 +587,19 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
             {selectedCarService === "Piston Change" && (
               <div className="relative">
                 <label className="block mb-1 text-gray-700 text-xl">اختر نوع الخدمة لبستم المحرك</label>
-                <select className="w-full p-3 border border-gray-300 rounded" required>
+                 <select
+                  className="w-full p-3 border border-gray-300 rounded"
+                  required
+                  value={subService}
+                  onChange={(e) => setSubService(e.target.value)}
+                > 
                   <option value="">اختر الخدمة</option>
                   <option value="Basic Piston Service">خدمة أساسية (50$)</option>
                   <option value="Advanced Piston Service">خدمة متقدمة (70$)</option>
                 </select>
               </div>
             )}
+
           </div>
           <div className="mt-6 flex flex-col items-center w-full relative text-right gap-4">
             <p className="mb-8 text-gray-600 text-xl font-medium">

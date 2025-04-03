@@ -53,7 +53,7 @@ const Header = ({ isAuthenticated, user, onLoginClick, onLogout }) => {
         {!isAuthenticated ? (
           <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
             <button 
-              className="mt-2 sm:mt-0 px-3 py-2 bg-[#278de9] text-white text-base sm:text-lg font-semibold rounded transition-all duration-300 hover:bg-[#0966b7] hover:scale-105"
+              className="mt-2 sm:mt-0 px-3 py-2 bg-[#278de9] text-white text-base sm:text-lg font-semibold rounded transition-all duration-300 hover:bg-[#0966b7] hover:scale-105 animate__animated animate__pulse"
               onClick={onLoginClick}
             >
               Login

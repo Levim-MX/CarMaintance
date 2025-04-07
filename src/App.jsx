@@ -1,22 +1,27 @@
-import React, { useEffect, useState, useCallback } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import 'animate.css';
+import React, { useEffect, useState, useCallback } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
+import "animate.css";
 
 // مكونات الواجهة الأمامية
-import Header from './componts/Header.jsx';
-import FQA from './componts/FQA.jsx';
-import Home from './componts/Home.jsx';
-import ServicesContent from './componts/ServicesContent.jsx';
-import Home2 from './componts/Home2.jsx';
-import Footer from './componts/Footer.jsx';
-import AboutUs from './componts/AboutUs.jsx';
-import Form from './componts/Form.jsx';
+import Header from "./componts/Header.jsx";
+import FQA from "./componts/FQA.jsx";
+import Home from "./componts/Home.jsx";
+import ServicesContent from "./componts/ServicesContent.jsx";
+import Home2 from "./componts/Home2.jsx";
+import Footer from "./componts/Footer.jsx";
+import AboutUs from "./componts/AboutUs.jsx";
+import Form from "./componts/Form.jsx";
 
-import './App.css';
+import "./App.css";
 
 // مكونات الأدمن
-import AdminLogin from './componts/Admin/AdminLogin.jsx';
-import AdminDashboard from './componts/Admin/AdminDashboard.jsx';
+import AdminLogin from "./componts/Admin/AdminLogin.jsx";
+import AdminDashboard from "./componts/Admin/AdminDashboard.jsx";
 
 function App() {
   // حالة تحميل الصفحة
@@ -62,6 +67,10 @@ function App() {
 
   return (
     <Router>
+      {/* إذا كان الفورم ظاهر نضيف طبقة خلفية ضبابية */}
+      {showForm && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40"></div>
+      )}
       <Routes>
         {/* صفحة الواجهة الرئيسية للمستخدم */}
         <Route
@@ -69,7 +78,6 @@ function App() {
           element={
             <>
               <Header
-              
                 isAuthenticated={isAuthenticated}
                 user={user}
                 onLoginClick={() => setShowForm(true)}
@@ -77,28 +85,29 @@ function App() {
               />
               {!showForm ? (
                 <>
-                
                   <Home />
-                  <Home2/>
-                  <FQA/>
+                  <Home2 />
+                  <FQA />
                   <ServicesContent onServiceClick={handleShowForm} />
                   <AboutUs />
                   <Footer />
                 </>
               ) : (
                 // تمرير onLogin لتحديث حالة المستخدم عند التسجيل/تسجيل الدخول
-                <Form
-                  onCloseForm={handleCloseForm}
-                  selectedService={selectedService}
-                  isAuthenticated={isAuthenticated}
-                  onLogin={handleLogin}
-                />
+                <div className="fixed z-50 inset-0 flex items-center justify-center">
+                  <Form
+                    onCloseForm={handleCloseForm}
+                    selectedService={selectedService}
+                    isAuthenticated={isAuthenticated}
+                    onLogin={handleLogin}
+                  />
+                </div>
               )}
             </>
           }
         />
 
-        {/* مسارات الأدمن */}
+        {/* مسارات الأدمن ء*/}
         <Route
           path="/admin/login"
           element={<AdminLogin onLogin={handleLogin} />}

@@ -1,160 +1,112 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import Masonry from 'react-masonry-css';
 
 function ServicesContent({ onServiceClick }) {
+  // إعداد الأعمدة حسب حجم الشاشة باستخدام react-masonry-css
+  const breakpointColumnsObj = {
+    default: 3,
+    1100: 2,
+    700: 1,
+  };
+
+  // مصفوفة الخدمات (يمكنك تعديل الصور والعناوين حسب الحاجة)
+  const services = [
+    {
+      id: 1,
+      title: "صيانة المحرك",
+      service: "Engine Maintenance",
+      image: "/images/audiCarEngin.jpg",
+    },
+    {
+      id: 2,
+      title: "تبديل زيت وفلاتر السيارة",
+      service: "Oil Change",
+      image: "/images/oilChange.jpg",
+    },
+    {
+      id: 3,
+      title: "تبديل بستم المحرك",
+      service: "Piston Change",
+      image: "/images/part2.png",
+    },
+    {
+      id: 4,
+      title: "صيانة الإطارات",
+      service: "Tire Maintenance",
+      image: "/images/audiCarWheel.jpeg",
+    },
+    {
+      id: 5,
+      title: "فحص وتبديل البطارية",
+      service: "Battery Replacement",
+      image: "/images/car battrey.jpg",
+    },
+    {
+      id: 6,
+      title: "غسل وتنظيف السيارة",
+      service: "Car Washing",
+      image: "/images/carWashinggg.jpg",
+    },
+    {
+      id: 7,
+      title: "إصلاح أنظمة الكهرباء",
+      service: "Electrical System Repair",
+      image: "/images/wiers.jpg",
+    },
+    {
+      id: 8,
+      title: "صيانة المكابح",
+      service: "Brake Maintenance",
+      image: "/images/640px-Bremsanlage.jpg",
+    },
+    
+  ];
+
   return (
-    <section 
-      id="Services" 
-      className="mt-[20em] relative top-[30em] flex flex-col items-center gap-[100px] mb-[10em]"
+    <section
+      id="Services"
+      className="mt-[20%] py-10 border-4 rounded-[40px] bg-white-50 flex flex-col items-center"
     >
       {/* عنوان القسم */}
-      <div className="heading font-bold text-2xl">
-        <h1>خدمات الصيانة</h1>
+      <div className="mb-10">
+        <h1 className="text-4xl font-bold text-blue-600 border-b-2 border-blue-300 pb-2">
+          خدمات الصيانة
+        </h1>
       </div>
 
-      {/* حاوية الخدمات */}
-      <div 
-        id="serverice-continar" 
-        className="grid grid-cols-3 gap-2 gap-y-[60px] w-full md:w-[100%] mr-24 mt-40"
+      {/* شبكة الخدمات باستخدام Masonry */}
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="flex w-[50%]  mr-[30%] gap-[20%]"
+        columnClassName="pl-4 bg-clip-padding"
       >
-        {/* صيانة المحرك */}
-        <div 
-          className="box ml-16 w-[450px] h-[450px] bg-[#fff6f8] rounded-lg p-[10px] border-2 border-[#4386c163] flex flex-col items-center justify-center shadow-[1px_4px_5px_rgba(0,0,0,0.7)] transition-transform duration-300 ease-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:border-[3px] hover:border-[#278ee9c2]"
-        >
-          <img 
-            src="/images/audiCarEngin.jpg" 
-            alt="صيانة المحرك" 
-            className="p-[3px] w-full h-[350px] object-cover" 
-          />
-          <button 
-            className="btn py-2 px-4 mt-10 font-normal text-[22px] bg-[#3694e6cf] rounded-[20px] text-white transition-transform duration-300 ease-in-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:bg-[#278ee9f3]"
-            onClick={() => onServiceClick("Engine Maintenance")}
+        {services.map((service) => (
+          <motion.div
+            key={service.id}
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: service.id * 0.1 }}
+            className="flex flex-col items-center mb-6"
           >
-            صيانة المحرك
-          </button>
-        </div>
-
-        {/* تبديل زيت وفلاتر السيارة */}
-        <div 
-          className="box ml-16 w-[450px] h-[450px] bg-[#fff6f8] rounded-lg p-[10px] border-2 border-[#4386c163] flex flex-col items-center justify-center shadow-[1px_4px_5px_rgba(0,0,0,0.7)] transition-transform duration-300 ease-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:border-[3px] hover:border-[#278ee9c2]"
-        >
-          <img 
-            src="/images/oilChange.jpg" 
-            alt="تبديل الزيت" 
-            className="p-[3px] w-full h-[350px] object-cover" 
-          />
-          <button 
-            className="btn py-2 px-4 mt-10 font-normal text-[22px] bg-[#3694e6cf] rounded-[20px] text-white transition-transform duration-300 ease-in-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:bg-[#278ee9f3]"
-            onClick={() => onServiceClick("Oil Change")}
-          >
-            تبديل زيت وفلاتر السيارة
-          </button>
-        </div>
-
-        {/* تبديل بستم المحرك */}
-        <div 
-          className="box ml-16 w-[450px] h-[450px] bg-[#fff6f8] rounded-lg p-[10px] border-2 border-[#4386c163] flex flex-col items-center justify-center shadow-[1px_4px_5px_rgba(0,0,0,0.7)] transition-transform duration-300 ease-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:border-[3px] hover:border-[#278ee9c2]"
-        >
-          <img 
-            src="/images/part2.png" 
-            alt="تبديل بستم المحرك" 
-            className="p-[3px] w-full h-[290px] object-cover" 
-          />
-          <button 
-            className="btn py-2 px-4 mt-10 font-normal text-[22px] bg-[#3694e6cf] rounded-[20px] text-white transition-transform duration-300 ease-in-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:bg-[#278ee9f3]"
-            onClick={() => onServiceClick("Piston Change")}
-          >
-            تبديل بستم المحرك
-          </button>
-        </div>
-
-        {/* صيانة الإطارات */}
-        <div 
-          className="box ml-16 w-[450px] h-[450px] bg-[#fff6f8] rounded-lg p-[10px] border-2 border-[#4386c163] flex flex-col items-center justify-center shadow-[1px_4px_5px_rgba(0,0,0,0.7)] transition-transform duration-300 ease-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:border-[3px] hover:border-[#278ee9c2]"
-        >
-          <img 
-            src="/images/audiCarWheel.jpeg" 
-            alt="صيانة الإطارات" 
-            className="p-[3px] w-full h-[350px] object-cover" 
-          />
-          <button 
-            className="btn py-2 px-4 mt-10 font-normal text-[22px] bg-[#3694e6cf] rounded-[20px] text-white transition-transform duration-300 ease-in-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:bg-[#278ee9f3]"
-            onClick={() => onServiceClick("Tire Maintenance")}
-          >
-            صيانة الإطارات
-          </button>
-        </div>
-
-        {/* فحص وتبديل البطارية */}
-        <div 
-          className="box ml-16 w-[450px] h-[450px] bg-[#fff6f8] rounded-lg p-[10px] border-2 border-[#4386c163] flex flex-col items-center justify-center shadow-[1px_4px_5px_rgba(0,0,0,0.7)] transition-transform duration-300 ease-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:border-[3px] hover:border-[#278ee9c2]"
-        >
-          <img 
-            src="/images/car battrey.jpg" 
-            alt="فحص وتبديل البطارية" 
-            className="p-[3px] w-full h-[350px] object-cover" 
-          />
-          <button 
-            className="btn py-2 px-4 mt-10 font-normal text-[22px] bg-[#3694e6cf] rounded-[20px] text-white transition-transform duration-300 ease-in-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:bg-[#278ee9f3]"
-            onClick={() => onServiceClick("Battery Replacement")}
-          >
-            فحص وتبديل البطارية
-          </button>
-        </div>
-
-        {/* غسل وتنظيف السيارة */}
-        <div 
-          className="box ml-16 w-[450px] h-[450px] bg-[#fff6f8] rounded-lg p-[10px] border-2 border-[#4386c163] flex flex-col items-center justify-center shadow-[1px_4px_5px_rgba(0,0,0,0.7)] transition-transform duration-300 ease-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:border-[3px] hover:border-[#278ee9c2]"
-        >
-          <img 
-            src="/images/carWashinggg.jpg" 
-            alt="غسل السيارة" 
-            className="p-[3px] w-full h-[350px] object-cover" 
-          />
-          <button 
-            className="btn py-2 px-4 mt-10 font-normal text-[22px] bg-[#3694e6cf] rounded-[20px] text-white transition-transform duration-300 ease-in-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:bg-[#278ee9f3]"
-            onClick={() => onServiceClick("Car Washing")}
-          >
-            غسل وتنظيف السيارة
-          </button>
-       
-        </div>
-
-        {/* إصلاح أنظمة الكهرباء */}
-        <div 
-          className="box ml-16 w-[450px] h-[450px] bg-[#fff6f8] rounded-lg p-[10px] border-2 border-[#4386c163] flex flex-col items-center justify-center shadow-[1px_4px_5px_rgba(0,0,0,0.7)] transition-transform duration-300 ease-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:border-[3px] hover:border-[#278ee9c2]"
-        >
-          <img 
-            src="/images/wiers.jpg" 
-            alt="إصلاح أنظمة الكهرباء" 
-            className="p-[3px] w-full h-[350px] object-cover" 
-          />
-          <button 
-            className="btn py-2 px-4 mt-10 font-normal text-[22px] bg-[#3694e6cf] rounded-[20px] text-white transition-transform duration-300 ease-in-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:bg-[#278ee9f3]"
-            onClick={() => onServiceClick("Electrical System Repair")}
-          >
-            إصلاح أنظمة الكهرباء
-          </button>
-          
-        </div>
-
-        {/* صيانة المكابح */}
-        <div 
-          className="box ml-16 w-[450px] h-[450px] bg-[#fff6f8] rounded-lg p-[10px] border-2 border-[#4386c163] flex flex-col items-center justify-center shadow-[1px_4px_5px_rgba(0,0,0,0.7)] transition-transform duration-300 ease-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:border-[3px] hover:border-[#278ee9c2]"
-        >
-          <img 
-            src="/images/640px-Bremsanlage.jpg" 
-            alt="صيانة المكابح" 
-            className="p-[3px] w-full h-[350px] object-cover" 
-          />
-          <button 
-            className="btn py-2 px-4 mt-10 font-normal text-[22px] bg-[#3694e6cf] rounded-[20px] text-white transition-transform duration-300 ease-in-out hover:scale-110 hover:shadow-[5px_6px_30px_rgba(0,0,0,0.35)] hover:bg-[#278ee9f3]"
-            onClick={() => onServiceClick("Brake Maintenance")}
-          >
-            صيانة المكابح
-          </button>
-         
-        </div>
-      </div>
+            {/* حاوية الصورة بشكل دائري */}
+            <div className="w-40 h-40 rounded-full overflow-hidden border-4 border-blue-200 shadow-lg transition-transform duration-300 ease-out hover:scale-105">
+              <img
+                src={service.image}
+                alt={service.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* زر عرض الخدمة مع اسم الخدمة أسفله */}
+            <button
+              onClick={() => onServiceClick(service.service)}
+              className="mt-4 py-2 px-4 font-medium text-white bg-blue-600 rounded-full transition-colors hover:bg-blue-700"
+            >
+              {service.title}
+            </button>
+          </motion.div>
+        ))}
+      </Masonry>
     </section>
   );
 }

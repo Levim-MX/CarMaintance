@@ -36,7 +36,7 @@ const Header = ({ isAuthenticated, user, onLoginClick, onLogout }) => {
   };
 
   return (
-    <header className="w-full bg-[#fff6f8] px-4 sm:px-8 md:px-[10%] py-4 flex flex-col sm:flex-row justify-between items-center shadow-md">
+    <header className="w-full bg-[#ffffff] px-4 sm:px-8 md:px-[10%] py-4 flex flex-col sm:flex-row justify-between items-center shadow-md">
       <a 
         href="#" 
         className="text-[#278de9] text-2xl sm:text-4xl font-bold mb-2 sm:mb-0"

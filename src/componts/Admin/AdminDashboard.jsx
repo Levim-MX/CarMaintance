@@ -33,6 +33,18 @@ function AdminDashboard() {
   const currentOrders = orders.filter(order => !order.confirmed);
   const completedOrders = orders.filter(order => order.confirmed);
 
+  // دالة لتجميع الطلبات حسب user_id
+  const groupOrdersByUserId = (ordersArray) => {
+    return ordersArray.reduce((acc, order) => {
+      const userId = order.user_id?._id || "Unknown";
+      if (!acc[userId]) {
+        acc[userId] = [];
+      }
+      acc[userId].push(order);
+      return acc;
+    }, {});
+  };
+
   // دالة لحذف الطلب مع تأكيد من المستخدم
   const handleDeleteOrder = async (orderId) => {
     const result = await MySwal.fire({
@@ -78,12 +90,11 @@ function AdminDashboard() {
   const handleCompleteOrder = async (orderId) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.put(
+      await axios.put(
         `http://localhost:3000/api/order/${orderId}`,
         { confirmed: true },
         { headers: { "x-auth-token": token } }
       );
-      console.log("Order updated:", res.data);
       setOrders(prevOrders =>
         prevOrders.map(order =>
           order._id === orderId ? { ...order, confirmed: true } : order
@@ -107,6 +118,72 @@ function AdminDashboard() {
         confirmButtonColor: "#d33",
       });
     }
+  };
+
+  // دالة عرض الطلبات المجمعة حسب user_id
+  const renderGroupedOrders = (ordersArray) => {
+    const grouped = groupOrdersByUserId(ordersArray);
+    return Object.keys(grouped).map((userId) => {
+      const userOrders = grouped[userId];
+      // نأخذ أول طلب للحصول على بيانات المستخدم
+      const userName = userOrders[0]?.user_id?.name || "Unknown";
+      const phoneNumber = userOrders[0]?.user_id?.phoneNumber || "N/A";
+      return (
+        <div key={userId} className="mb-8">
+          {/* إضافة توضيح أن الأول اسم مستخدم والثاني رقم هاتف */}
+          <h3 className="text-xl font-semibold mb-2">
+            User Name : {userName} <br />  Phone Num: {phoneNumber}
+          </h3>
+          <div className="overflow-x-auto">
+            <table className="min-w-full border-collapse">
+              <thead>
+                <tr>
+                  <th className="border px-4 py-2">Car Type</th>
+                  <th className="border px-4 py-2">Branch</th>
+                  <th className="border px-4 py-2">Service</th>
+                  <th className="border px-4 py-2">Sub Service</th>
+                  <th className="border px-4 py-2">Time</th>
+                  <th className="border px-4 py-2">Confirmed</th>
+                  <th className="border px-4 py-2">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {userOrders.map((order) => (
+                  <tr key={order._id}>
+                    <td className="border px-4 py-2">{order.car_name}</td>
+                    <td className="border px-4 py-2">{order.branch_name}</td>
+                    <td className="border px-4 py-2">{order.service_name}</td>
+                    <td className="border px-4 py-2">{order.selected_sub_service}</td>
+                    <td className="border px-4 py-2">
+                      {new Date(order.createdAt).toLocaleString()}
+                    </td>
+                    <td className="border px-4 py-2">{order.confirmed ? "Yes" : "No"}</td>
+                    <td className="border px-4 py-2 flex space-x-2">
+                      <button
+                        onClick={() => handleDeleteOrder(order._id)}
+                        className="text-red-500 hover:text-red-700"
+                        title="Delete Order"
+                      >
+                        <FaTrash />
+                      </button>
+                      {!order.confirmed && (
+                        <button
+                          onClick={() => handleCompleteOrder(order._id)}
+                          className="text-green-500 hover:text-green-700"
+                          title="Mark as Completed"
+                        >
+                          <FaCheck />
+                        </button>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      );
+    });
   };
 
   // دالة عرض المحتوى بناءً على currentView
@@ -136,55 +213,7 @@ function AdminDashboard() {
             {currentOrders.length === 0 ? (
               <p className="text-gray-600">No orders found.</p>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="min-w-full border-collapse">
-                  <thead>
-                    <tr>
-                      <th className="border px-4 py-2">User Name</th>
-                      <th className="border px-4 py-2">Phone</th>
-                      <th className="border px-4 py-2">Car Type</th>
-                      <th className="border px-4 py-2">Branch</th>
-                      <th className="border px-4 py-2">Service</th>
-                      <th className="border px-4 py-2">Sub Service</th>
-                      <th className="border px-4 py-2">Time</th>
-                      <th className="border px-4 py-2">Confirmed</th>
-                      <th className="border px-4 py-2">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {currentOrders.map((order) => (
-                      <tr key={order._id}>
-                        <td className="border px-4 py-2">{order.user_id.name}</td>
-                        <td className="border px-4 py-2">{order.user_id.phoneNumber}</td>
-                        <td className="border px-4 py-2">{order.car_name}</td>
-                        <td className="border px-4 py-2">{order.branch_name}</td>
-                        <td className="border px-4 py-2">{order.service_name}</td>
-                        <td className="border px-4 py-2">{order.selected_sub_service}</td>
-                        <td className="border px-4 py-2">{new Date(order.createdAt).toLocaleString()}</td>
-                        <td className="border px-4 py-2">{order.confirmed ? "Yes" : "No"}</td>
-                        <td className="border px-4 py-2 flex space-x-2">
-                          <button
-                            onClick={() => handleDeleteOrder(order._id)}
-                            className="text-red-500 hover:text-red-700"
-                            title="Delete Order"
-                          >
-                            <FaTrash />
-                          </button>
-                          {!order.confirmed && (
-                            <button
-                              onClick={() => handleCompleteOrder(order._id)}
-                              className="text-green-500 hover:text-green-700"
-                              title="Mark as Completed"
-                            >
-                              <FaCheck />
-                            </button>
-                          )}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              renderGroupedOrders(currentOrders)
             )}
           </div>
         );
@@ -195,46 +224,7 @@ function AdminDashboard() {
             {completedOrders.length === 0 ? (
               <p className="text-gray-600">No completed orders found.</p>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="min-w-full border-collapse">
-                  <thead>
-                    <tr>
-                      <th className="border px-4 py-2">User Name</th>
-                      <th className="border px-4 py-2">Phone</th>
-                      <th className="border px-4 py-2">Car Type</th>
-                      <th className="border px-4 py-2">Branch</th>
-                      <th className="border px-4 py-2">Service</th>
-                      <th className="border px-4 py-2">Sub Service</th>
-                      <th className="border px-4 py-2">Time</th>
-                      <th className="border px-4 py-2">Confirmed</th>
-                      <th className="border px-4 py-2">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {completedOrders.map((order) => (
-                      <tr key={order._id}>
-                        <td className="border px-4 py-2">{order.user_id.name}</td>
-                        <td className="border px-4 py-2">{order.user_id.phoneNumber}</td>
-                        <td className="border px-4 py-2">{order.car_name}</td>
-                        <td className="border px-4 py-2">{order.branch_name}</td>
-                        <td className="border px-4 py-2">{order.service_name}</td>
-                        <td className="border px-4 py-2">{order.selected_sub_service}</td>
-                        <td className="border px-4 py-2">{new Date(order.createdAt).toLocaleString()}</td>
-                        <td className="border px-4 py-2">{order.confirmed ? "Yes" : "No"}</td>
-                        <td className="border px-4 py-2">
-                          <button
-                            onClick={() => handleDeleteOrder(order._id)}
-                            className="text-red-500 hover:text-red-700"
-                            title="Delete Order"
-                          >
-                            <FaTrash />
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+              renderGroupedOrders(completedOrders)
             )}
           </div>
         );
@@ -283,9 +273,7 @@ function AdminDashboard() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 p-8">
-        {renderContent()}
-      </main>
+      <main className="flex-1 p-8">{renderContent()}</main>
     </div>
   );
 }

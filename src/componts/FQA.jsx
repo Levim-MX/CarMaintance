@@ -15,7 +15,7 @@ function FQA() {
         md:top-[130%] md:right-0
         lg:top-[120%] lg:right-[5%]
         xl:top-[110%] xl:right-[8%]
-        2xl:top-[150%] 2xl:right-[5%]
+        2xl:top-[290%] 2xl:right-[5%]
       "
     >
       <h1 className="text-center text-blue-500 text-2xl font-bold mb-5">

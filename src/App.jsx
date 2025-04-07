@@ -11,6 +11,7 @@ import Home2 from './componts/Home2.jsx';
 import Footer from './componts/Footer.jsx';
 import AboutUs from './componts/AboutUs.jsx';
 import Form from './componts/Form.jsx';
+
 import './App.css';
 
 // مكونات الأدمن
@@ -68,6 +69,7 @@ function App() {
           element={
             <>
               <Header
+              
                 isAuthenticated={isAuthenticated}
                 user={user}
                 onLoginClick={() => setShowForm(true)}
@@ -75,6 +77,7 @@ function App() {
               />
               {!showForm ? (
                 <>
+                
                   <Home />
                   <Home2/>
                   <FQA/>

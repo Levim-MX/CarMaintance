@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Header = ({ isAuthenticated, user, onLoginClick, onLogout }) => {
   const navigate = useNavigate();
@@ -9,6 +10,29 @@ const Header = ({ isAuthenticated, user, onLoginClick, onLogout }) => {
     if (section) {
       section.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: 'هل أنت متأكد؟',
+      text: 'هل تريد تسجيل الخروج؟',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'نعم، تسجيل الخروج',
+      cancelButtonText: 'إلغاء',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        onLogout(); // تنفيذ عملية تسجيل الخروج
+        Swal.fire({
+          icon: 'success',
+          title: 'تم تسجيل الخروج بنجاح',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
   };
 
   return (
@@ -61,7 +85,6 @@ const Header = ({ isAuthenticated, user, onLoginClick, onLogout }) => {
             <button 
               className="mt-2 sm:mt-0 px-3 py-2 bg-green-600 text-white text-base sm:text-lg font-semibold rounded transition-all duration-300 hover:bg-green-700 hover:scale-105"
               onClick={onLoginClick}
-
             >
               Register
             </button>
@@ -73,7 +96,7 @@ const Header = ({ isAuthenticated, user, onLoginClick, onLogout }) => {
             </span>
             <button 
               className="mt-2 sm:mt-0 px-3 py-2 bg-red-600 text-white text-base sm:text-lg font-semibold rounded transition-all duration-300 hover:bg-red-700 hover:scale-105"
-              onClick={onLogout}
+              onClick={handleLogout}
             >
               Sign Out
             </button>

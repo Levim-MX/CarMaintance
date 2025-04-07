@@ -176,32 +176,13 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
 
       onCloseForm();
       Swal.fire({
-        title: " تم التسجيل!",
-        icon: "success",
-        confirmButtonText: "حسنًا",
-        confirmButtonColor: "#28a745",
-
-        timer: 2000, // تقليل مدة الإغلاق التلقائي ليكون أسرع
-        width: "300px", // تصغير عرض التنبيه
-        
-        
-        padding: "0.8rem", // تقليل التباعد الداخلي
-        customClass: {
-          popup: "custom-swal-popup", // كلاس مخصص سنضيفه في Tailwind
-          title: "text-lg font-semibold",
-          confirmButton: "px-4 py-2 text-sm"
-      },
-        customClass: {
-            title: "swal-small-title",
-            popup: "swal-small-popup",
-            confirmButton: "swal-small-button"
-        },
-        showClass: {
-            popup: 'animate__animated animate__fadeInDown'
-        },
-        hideClass: {
-            popup: 'animate__animated animate__fadeOutUp'
-        }
+        toast: true,
+        position: 'center',
+        icon: 'success',
+        title: 'تم تسجيل الدخول بنجاح!',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
     });
     
     } catch (error) {
@@ -219,7 +200,13 @@ const Form = ({ onCloseForm, selectedService, isAuthenticated, onLogin }) => {
         });
       } else {
         console.error(error);
-        alert("Login error");
+        Swal.fire({
+          title: "خطأ في تسجيل الدخول",
+          text: "تعذر الاتصال بالخادم. يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى.",
+          icon: "error",
+          confirmButtonText: "حسناً",
+          confirmButtonColor: "#d33",
+        });
       }
     }
   };

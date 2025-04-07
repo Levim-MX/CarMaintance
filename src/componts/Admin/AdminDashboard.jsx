@@ -74,7 +74,7 @@ function AdminDashboard() {
     }
   };
 
-  // دالة لتأكيد الطلب ونقله إلى الطلبات المكتملة مع عرض تنبيه Toast
+  // دالة لتأكيد الطلب (تحديث confirmed إلى true)
   const handleCompleteOrder = async (orderId) => {
     try {
       const token = localStorage.getItem("token");
@@ -146,6 +146,7 @@ function AdminDashboard() {
                       <th className="border px-4 py-2">Branch</th>
                       <th className="border px-4 py-2">Service</th>
                       <th className="border px-4 py-2">Sub Service</th>
+                      <th className="border px-4 py-2">Time</th>
                       <th className="border px-4 py-2">Confirmed</th>
                       <th className="border px-4 py-2">Actions</th>
                     </tr>
@@ -159,6 +160,7 @@ function AdminDashboard() {
                         <td className="border px-4 py-2">{order.branch_name}</td>
                         <td className="border px-4 py-2">{order.service_name}</td>
                         <td className="border px-4 py-2">{order.selected_sub_service}</td>
+                        <td className="border px-4 py-2">{new Date(order.createdAt).toLocaleString()}</td>
                         <td className="border px-4 py-2">{order.confirmed ? "Yes" : "No"}</td>
                         <td className="border px-4 py-2 flex space-x-2">
                           <button
@@ -203,6 +205,7 @@ function AdminDashboard() {
                       <th className="border px-4 py-2">Branch</th>
                       <th className="border px-4 py-2">Service</th>
                       <th className="border px-4 py-2">Sub Service</th>
+                      <th className="border px-4 py-2">Time</th>
                       <th className="border px-4 py-2">Confirmed</th>
                       <th className="border px-4 py-2">Actions</th>
                     </tr>
@@ -216,6 +219,7 @@ function AdminDashboard() {
                         <td className="border px-4 py-2">{order.branch_name}</td>
                         <td className="border px-4 py-2">{order.service_name}</td>
                         <td className="border px-4 py-2">{order.selected_sub_service}</td>
+                        <td className="border px-4 py-2">{new Date(order.createdAt).toLocaleString()}</td>
                         <td className="border px-4 py-2">{order.confirmed ? "Yes" : "No"}</td>
                         <td className="border px-4 py-2">
                           <button

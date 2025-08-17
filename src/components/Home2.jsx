@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { fa1, fa2, fa3 } from '@fortawesome/free-solid-svg-icons';

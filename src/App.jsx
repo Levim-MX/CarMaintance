@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,24 +8,22 @@ import {
 import "animate.css";
 
 // مكونات الواجهة الأمامية
-import Header from "./componts/Header.jsx";
-import FQA from "./componts/FQA.jsx";
-import Home from "./componts/Home.jsx";
-import ServicesContent from "./componts/ServicesContent.jsx";
-import Home2 from "./componts/Home2.jsx";
-import Footer from "./componts/Footer.jsx";
-import AboutUs from "./componts/AboutUs.jsx";
-import Form from "./componts/Form.jsx";
+import Header from "./components/Header.jsx";
+import FQA from "./components/FQA.jsx";
+import Home from "./components/Home.jsx";
+import ServicesContent from "./components/ServicesContent.jsx";
+import Home2 from "./components/Home2.jsx";
+import Footer from "./components/Footer.jsx";
+import AboutUs from "./components/AboutUs.jsx";
+import Form from "./components/Form.jsx";
 
 import "./App.css";
 
 // مكونات الأدمن
-import AdminLogin from "./componts/Admin/AdminLogin.jsx";
-import AdminDashboard from "./componts/Admin/AdminDashboard.jsx";
+import AdminLogin from "./components/Admin/AdminLogin.jsx";
+import AdminDashboard from "./components/Admin/AdminDashboard.jsx";
 
 function App() {
-  // حالة تحميل الصفحة
-  const [isLoaded, setIsLoaded] = useState(false);
   // للتحكم بعرض الفورم الخاص بالخدمة
   const [showForm, setShowForm] = useState(false);
   // حفظ نوع الخدمة المختارة من قسم الخدمات
@@ -34,12 +32,6 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   // تخزين بيانات المستخدم مثل الاسم
   const [user, setUser] = useState({ username: "" });
-
-  useEffect(() => {
-    // تعيين حالة التحميل بعد تأخير بسيط
-    const timer = setTimeout(() => setIsLoaded(true), 100);
-    return () => clearTimeout(timer);
-  }, []);
 
   // دالة لإظهار الفورم عند اختيار خدمة من قسم الخدمات
   const handleShowForm = (service) => {

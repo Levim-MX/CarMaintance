@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+/* eslint-disable react/prop-types, no-unused-vars */
+import { useState, useEffect } from 'react';
 import axios from "axios";
 import { FaUserEdit, FaCamera } from "react-icons/fa";
 
